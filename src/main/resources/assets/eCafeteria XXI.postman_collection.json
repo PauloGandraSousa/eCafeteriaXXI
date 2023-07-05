@@ -1,0 +1,325 @@
+{
+	"info": {
+		"_postman_id": "30c568a3-4d9f-444f-abde-4b7a608bd73b",
+		"name": "eCafeteria XXI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1425498",
+		"_collection_link": "https://lively-escape-360163.postman.co/workspace/EAPLI~daf07218-5ca9-4532-b501-ded9e6ef45a1/collection/1425498-30c568a3-4d9f-444f-abde-4b7a608bd73b?action=share&creator=1425498&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Authz",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Authtenticates\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let token = postman.getResponseHeader(\"Authorization\");\r",
+									"    pm.environment.set(\"token\", token);    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"bar@email.com\",\r\n    \"password\":\"bar123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/login",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login (user admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Authtenticates\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let token = postman.getResponseHeader(\"Authorization\");\r",
+									"    pm.environment.set(\"tokenUserAdmin\", token);    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"u1@mail.com\",\r\n    \"password\":\"Password1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/login",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"bar@email.com\",\r\n    \"fullName\":\"Mary Bar\",\r\n    \"password\":\"bar123\",\r\n    \"rePassword\":\"bar123\",\r\n    \"authorities\":[\"FOO_ADMIN\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/register",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User management",
+			"item": [
+				{
+					"name": "user search",
+					"item": [
+						{
+							"name": "Search user by username",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"query\":{\r\n        \"username\":\"u1@mail.com\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/admin/user/search",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search user by username or fullname",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\":{\r\n        \"number\":\"1\",\r\n        \"limit\":\"10\"\r\n    },\r\n    \"query\":{\r\n        \"username\":\"mary1@mail.com\",\r\n        \"fullName\":\"Two\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/admin/user/search",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search all page 1",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\":{\r\n        \"number\":\"1\",\r\n        \"limit\":\"5\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/admin/user/search",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search all page 2",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\":{\r\n        \"number\":\"2\",\r\n        \"limit\":\"5\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/admin/user/search",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"user",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{tokenUserAdmin}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "doc",
+			"item": [
+				{
+					"name": "OpenAPI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api-docs/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api-docs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Swagger UI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/swagger-ui",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"swagger-ui"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
