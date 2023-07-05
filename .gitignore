@@ -234,3 +234,6 @@ fabric.properties
 
 #
 #
+/target/
+/.vscode
+/.project
