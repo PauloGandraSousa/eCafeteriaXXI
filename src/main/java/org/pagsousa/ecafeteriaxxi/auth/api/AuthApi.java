@@ -29,9 +29,9 @@ import javax.validation.Valid;
 
 import org.pagsousa.ecafeteriaxxi.usermanagement.api.UserView;
 import org.pagsousa.ecafeteriaxxi.usermanagement.api.UserViewMapper;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.User;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.CreateUserRequest;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.UserService;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.CreateUserRequest;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.UserService;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

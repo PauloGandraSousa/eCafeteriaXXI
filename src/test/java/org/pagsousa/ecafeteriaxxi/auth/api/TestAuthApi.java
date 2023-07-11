@@ -30,18 +30,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.pagsousa.ecafeteriaxxi.auth.api.AuthRequest;
 import org.pagsousa.ecafeteriaxxi.testutils.JsonHelper;
 import org.pagsousa.ecafeteriaxxi.testutils.UserTestDataFactory;
 import org.pagsousa.ecafeteriaxxi.usermanagement.api.UserView;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.CreateUserRequest;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.CreateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -69,27 +67,27 @@ class TestAuthApi {
 
 	@Test
 	void testLoginSuccess() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User", password);
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User", password);
 
-		final AuthRequest request = new AuthRequest(userView.getUsername(), password);
+		final var request = new AuthRequest(userView.getUsername(), password);
 
-		final MvcResult createResult = this.mockMvc
+		final var createResult = this.mockMvc
 				.perform(post("/api/public/login").contentType(MediaType.APPLICATION_JSON)
 						.content(JsonHelper.toJson(objectMapper, request)))
 				.andExpect(status().isOk()).andExpect(header().exists(HttpHeaders.AUTHORIZATION)).andReturn();
 
-		final UserView authUserView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
+		final var authUserView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
 				UserView.class);
 		assertEquals(userView.getId(), authUserView.getId(), "User ids must match!");
 	}
 
 	@Test
 	void testLoginFail() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User", password);
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User", password);
 
-		final AuthRequest request = new AuthRequest(userView.getUsername(), "zxc");
+		final var request = new AuthRequest(userView.getUsername(), "zxc");
 
 		this.mockMvc
 				.perform(post("/api/public/login").contentType(MediaType.APPLICATION_JSON)
@@ -100,14 +98,14 @@ class TestAuthApi {
 
 	@Test
 	void testRegisterSuccess() throws Exception {
-		final CreateUserRequest goodRequest = new CreateUserRequest(
-				String.format("test.user.%d@nix.com", currentTimeMillis()), "Test User A", password);
+		final var goodRequest = new CreateUserRequest(String.format("test.user.%d@nix.com", currentTimeMillis()),
+				"Test User A", password);
 
-		final MvcResult createResult = this.mockMvc.perform(post("/api/public/register")
+		final var createResult = this.mockMvc.perform(post("/api/public/register")
 				.contentType(MediaType.APPLICATION_JSON).content(JsonHelper.toJson(objectMapper, goodRequest)))
 				.andExpect(status().isOk()).andReturn();
 
-		final UserView userView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
+		final var userView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
 				UserView.class);
 		assertNotNull(userView.getId(), "User id must not be null!");
 		assertEquals(goodRequest.getFullName(), userView.getFullName(), "User fullname  update isn't applied!");
@@ -115,7 +113,7 @@ class TestAuthApi {
 
 	@Test
 	void testRegisterFail() throws Exception {
-		final CreateUserRequest badRequest = new CreateUserRequest("invalid.username", "", "");
+		final var badRequest = new CreateUserRequest("invalid.username", "", "");
 
 		this.mockMvc
 				.perform(post("/api/public/register").contentType(MediaType.APPLICATION_JSON)

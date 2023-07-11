@@ -18,28 +18,36 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.model;
+package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
-import org.springframework.security.core.GrantedAuthority;
+import java.util.Optional;
 
-import lombok.AllArgsConstructor;
-import lombok.Value;
+import org.mapstruct.Mapper;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
+
+import eapli.framework.general.domain.model.Description;
 
 /**
- * Based on https://github.com/Yoh0xFF/java-spring-security-example
  *
+ * @author Paulo Gandra Sousa 06/07/2023.
  */
-@Value
-@AllArgsConstructor
-public class Role implements GrantedAuthority {
+@Mapper(componentModel = "spring")
+public abstract class DishTypeViewMapper {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+	public abstract DishTypeView toView(DishType dt);
 
-	public static final String USER_ADMIN = "USER_ADMIN";
-	public static final String FOO_ADMIN = "FOO_ADMIN";
+	public abstract Iterable<DishTypeView> toView(Iterable<DishType> dts);
 
-	private String authority;
+	public String toView(final DishTypeAcronym acronym) {
+		return acronym.toString();
+	}
+
+	public String toView(final Description desc) {
+		return desc.toString();
+	}
+
+	public String toView(final Optional<Description> maybeDesc) {
+		return maybeDesc.map(Description::toString).orElse(null);
+	}
 }

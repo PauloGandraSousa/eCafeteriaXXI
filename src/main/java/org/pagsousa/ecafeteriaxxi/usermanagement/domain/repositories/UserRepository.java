@@ -18,20 +18,34 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.services;
+package org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+
+import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.Page;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.SearchUsersQuery;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
 
 /**
- * Based on https://github.com/Yoh0xFF/java-spring-security-example
  *
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SearchUsersQuery {
-	private String username;
-	private String fullName;
+public interface UserRepository {
+
+	<S extends User> List<S> saveAll(Iterable<S> entities);
+
+	<S extends User> S save(S entity);
+
+	Optional<User> findById(Long objectId);
+
+	default User getById(final Long id) {
+		final Optional<User> maybeUser = findById(id);
+		// throws 404 Not Found if the user does not exist or is not enabled
+		return maybeUser.filter(User::isEnabled).orElseThrow(() -> new NotFoundException(User.class, id));
+	}
+
+	Optional<User> findByUsername(String username);
+
+	List<User> searchUsers(Page page, SearchUsersQuery query);
 }

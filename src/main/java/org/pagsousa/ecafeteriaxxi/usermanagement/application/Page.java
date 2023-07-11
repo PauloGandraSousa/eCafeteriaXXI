@@ -18,21 +18,30 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.api;
+package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
-import java.util.List;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
-import org.mapstruct.Mapper;
-import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * Based on https://github.com/Yoh0xFF/java-spring-security-example
  *
+ * @TODO move to generic package
  */
-@Mapper(componentModel = "spring")
-public abstract class UserViewMapper {
+@AllArgsConstructor
+@Data
+public class Page {
+	@Min(value = 1, message = "Paging must start with page 1")
+	int number;
 
-	public abstract UserView toUserView(User user);
+	@Min(value = 1, message = "You can request minimum 1 records")
+	@Max(value = 100, message = "You can request maximum 100 records")
+	int limit;
 
-	public abstract List<UserView> toUserView(List<User> users);
+	public Page() {
+		this(1, 10);
+	}
 }

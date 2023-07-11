@@ -35,17 +35,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 import org.pagsousa.ecafeteriaxxi.testutils.JsonHelper;
 import org.pagsousa.ecafeteriaxxi.testutils.UserTestDataFactory;
-import org.pagsousa.ecafeteriaxxi.usermanagement.api.UserView;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.Role;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.CreateUserRequest;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.EditUserRequest;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.CreateUserRequest;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.EditUserRequest;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -72,14 +70,13 @@ class TestUserAdminApi {
 
 	@Test
 	void testCreateSuccess() throws Exception {
-		final CreateUserRequest goodRequest = new CreateUserRequest(
-				String.format("test.user.%d@nix.com", currentTimeMillis()), "Test User A", "Test12345_");
+		final var goodRequest = new CreateUserRequest(String.format("test.user.%d@nix.com", currentTimeMillis()),
+				"Test User A", "Test12345_");
 
-		final MvcResult createResult = this.mockMvc.perform(post("/api/admin/user")
-				.contentType(MediaType.APPLICATION_JSON).content(JsonHelper.toJson(objectMapper, goodRequest)))
-				.andExpect(status().isOk()).andReturn();
+		final var createResult = this.mockMvc.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
+				.content(JsonHelper.toJson(objectMapper, goodRequest))).andExpect(status().isOk()).andReturn();
 
-		final UserView userView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
+		final var userView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
 				UserView.class);
 		assertNotNull(userView.getId(), "User id must not be null!");
 		assertEquals(goodRequest.getFullName(), userView.getFullName(), "User fullname update isn't applied!");
@@ -87,7 +84,7 @@ class TestUserAdminApi {
 
 	@Test
 	void testCreateFail() throws Exception {
-		final CreateUserRequest badRequest = new CreateUserRequest("invalid.username", "", "");
+		final var badRequest = new CreateUserRequest("invalid.username", "", "");
 
 		this.mockMvc
 				.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
@@ -98,10 +95,10 @@ class TestUserAdminApi {
 
 	@Test
 	void testCreateUsernameExists() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User A");
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User A");
 
-		final CreateUserRequest badRequest = new CreateUserRequest(userView.getUsername(), "Test User A", "Test12345_");
+		final var badRequest = new CreateUserRequest(userView.getUsername(), "Test User A", "Test12345_");
 
 		this.mockMvc
 				.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
@@ -112,8 +109,8 @@ class TestUserAdminApi {
 
 	@Test
 	void testCreatePasswordsMismatch() throws Exception {
-		final CreateUserRequest badRequest = new CreateUserRequest(
-				String.format("test.user.%d@nix.com", currentTimeMillis()), "Test User A", "Test12345_");
+		final var badRequest = new CreateUserRequest(String.format("test.user.%d@nix.com", currentTimeMillis()),
+				"Test User A", "Test12345_");
 		badRequest.setRePassword("otherPass");
 
 		this.mockMvc
@@ -125,15 +122,15 @@ class TestUserAdminApi {
 
 	@Test
 	void testEditSuccess() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User A");
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User A");
 
-		final EditUserRequest updateRequest = new EditUserRequest("Test User B", null);
+		final var updateRequest = new EditUserRequest("Test User B", null);
 
-		final MvcResult updateResult = this.mockMvc.perform(put(String.format("/api/admin/user/%s", userView.getId()))
+		final var updateResult = this.mockMvc.perform(put(String.format("/api/admin/user/%s", userView.getId()))
 				.contentType(MediaType.APPLICATION_JSON).content(JsonHelper.toJson(objectMapper, updateRequest)))
 				.andExpect(status().isOk()).andReturn();
-		final UserView newUserView = JsonHelper.fromJson(objectMapper, updateResult.getResponse().getContentAsString(),
+		final var newUserView = JsonHelper.fromJson(objectMapper, updateResult.getResponse().getContentAsString(),
 				UserView.class);
 
 		assertEquals(updateRequest.getFullName(), newUserView.getFullName(), "User fullname update isn't applied!");
@@ -141,10 +138,10 @@ class TestUserAdminApi {
 
 	@Test
 	void testEditFailBadRequest() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User A");
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User A");
 
-		final EditUserRequest updateRequest = new EditUserRequest();
+		final var updateRequest = new EditUserRequest();
 
 		this.mockMvc
 				.perform(put(String.format("/api/admin/user/%s", userView.getId()))
@@ -156,7 +153,7 @@ class TestUserAdminApi {
 
 	@Test
 	void testEditFailNotFound() throws Exception {
-		final EditUserRequest updateRequest = new EditUserRequest("Test User B", null);
+		final var updateRequest = new EditUserRequest("Test User B", null);
 
 		this.mockMvc
 				.perform(put(String.format("/api/admin/user/%s", "0")).contentType(MediaType.APPLICATION_JSON)
@@ -166,8 +163,8 @@ class TestUserAdminApi {
 
 	@Test
 	void testDeleteSuccess() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User A");
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User A");
 
 		this.mockMvc.perform(delete(String.format("/api/admin/user/%s", userView.getId()))).andExpect(status().isOk());
 
@@ -183,22 +180,20 @@ class TestUserAdminApi {
 
 	@Test
 	void testDeleteAndCreateAgain() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User A");
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User A");
 
 		this.mockMvc.perform(delete(String.format("/api/admin/user/%s", userView.getId()))).andExpect(status().isOk());
 
 		this.mockMvc.perform(get(String.format("/api/admin/user/%s", userView.getId())))
 				.andExpect(status().isNotFound());
 
-		final CreateUserRequest goodRequest = new CreateUserRequest(userView.getUsername(), "Test User A",
-				"Test12345_");
+		final var goodRequest = new CreateUserRequest(userView.getUsername(), "Test User A", "Test12345_");
 
-		final MvcResult createResult = this.mockMvc.perform(post("/api/admin/user")
-				.contentType(MediaType.APPLICATION_JSON).content(JsonHelper.toJson(objectMapper, goodRequest)))
-				.andExpect(status().isOk()).andReturn();
+		final var createResult = this.mockMvc.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
+				.content(JsonHelper.toJson(objectMapper, goodRequest))).andExpect(status().isOk()).andReturn();
 
-		final UserView newUserView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
+		final var newUserView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
 				UserView.class);
 		assertNotEquals(userView.getId(), newUserView.getId(), "User ids must not match!");
 		assertEquals(userView.getUsername(), newUserView.getUsername(), "User names must match!");
@@ -206,13 +201,13 @@ class TestUserAdminApi {
 
 	@Test
 	void testGetSuccess() throws Exception {
-		final UserView userView = userTestDataFactory
-				.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()), "Test User A");
+		final var userView = userTestDataFactory.createUser(String.format("test.user.%d@nix.io", currentTimeMillis()),
+				"Test User A");
 
-		final MvcResult getResult = this.mockMvc.perform(get(String.format("/api/admin/user/%s", userView.getId())))
+		final var getResult = this.mockMvc.perform(get(String.format("/api/admin/user/%s", userView.getId())))
 				.andExpect(status().isOk()).andReturn();
 
-		final UserView newUserView = JsonHelper.fromJson(objectMapper, getResult.getResponse().getContentAsString(),
+		final var newUserView = JsonHelper.fromJson(objectMapper, getResult.getResponse().getContentAsString(),
 				UserView.class);
 
 		assertEquals(userView.getId(), newUserView.getId(), "User ids must be equal!");

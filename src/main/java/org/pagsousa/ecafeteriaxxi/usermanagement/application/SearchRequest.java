@@ -18,13 +18,14 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.services;
+package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Based on https://github.com/Yoh0xFF/java-spring-security-example
@@ -32,16 +33,14 @@ import lombok.Data;
  * @TODO move to generic package
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class Page {
-	@Min(value = 1, message = "Paging must start with page 1")
-	int number;
+public class SearchRequest<T> {
+	@Valid
+	@NotNull
+	Page page;
 
-	@Min(value = 1, message = "You can request minimum 1 records")
-	@Max(value = 100, message = "You can request maximum 100 records")
-	int limit;
-
-	public Page() {
-		this(1, 10);
-	}
+	@Valid
+	@NotNull
+	T query;
 }

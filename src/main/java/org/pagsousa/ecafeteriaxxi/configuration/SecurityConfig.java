@@ -25,9 +25,10 @@ import static java.lang.String.format;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.Role;
-import org.pagsousa.ecafeteriaxxi.usermanagement.repositories.UserRepository;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.Role;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -73,6 +74,7 @@ import lombok.RequiredArgsConstructor;
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@EnableConfigurationProperties
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -116,13 +118,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(format("%s/**", swaggerPath)).permitAll()
 				// Our public endpoints
 				.antMatchers("/api/public/**").permitAll() // public assets & end-points
-				.antMatchers("/api/rectangle/**").permitAll() // rectangle management
-				.antMatchers(HttpMethod.GET, "/api/foo/**").permitAll() // read-only foo
-				.antMatchers(HttpMethod.GET, "/api/bar/**").permitAll() // read-only bar
+				.antMatchers(HttpMethod.GET, "/api/dishtype/**").permitAll() // read-only dish type
 				// Our private endpoints
 				.antMatchers("/api/admin/user/**").hasRole(Role.USER_ADMIN) // user management
-				.antMatchers("/api/foo/**").hasRole(Role.FOO_ADMIN) // foo management
-				.antMatchers("/api/bar/**").hasRole(Role.FOO_ADMIN) // foo-bar management
+				.antMatchers("/api/dishtype/**").hasRole(Role.DISH_ADMIN) // dish type management
 				.anyRequest().authenticated()
 				// Set up oauth2 resource server
 				.and().httpBasic(Customizer.withDefaults()).oauth2ResourceServer().jwt();
@@ -145,11 +144,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Extract authorities from the roles claim
 	@Bean
 	public JwtAuthenticationConverter jwtAuthenticationConverter() {
-		final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+		final var jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
 		jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
 		jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
 
-		final JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+		final var jwtAuthenticationConverter = new JwtAuthenticationConverter();
 		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 		return jwtAuthenticationConverter;
 	}
@@ -163,8 +162,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Used by spring security if CORS is enabled.
 	@Bean
 	public CorsFilter corsFilter() {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		final CorsConfiguration config = new CorsConfiguration();
+		final var source = new UrlBasedCorsConfigurationSource();
+		final var config = new CorsConfiguration();
 		config.setAllowCredentials(true);
 		config.addAllowedOrigin("*");
 		config.addAllowedHeader("*");

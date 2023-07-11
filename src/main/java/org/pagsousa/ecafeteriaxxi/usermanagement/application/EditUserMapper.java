@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.services;
+package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -32,8 +32,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.Role;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.User;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.Role;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
 
 /**
  * Based on https://github.com/Yoh0xFF/java-spring-security-example

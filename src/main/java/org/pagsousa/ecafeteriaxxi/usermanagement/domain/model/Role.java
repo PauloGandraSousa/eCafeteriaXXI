@@ -18,26 +18,33 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.services;
+package org.pagsousa.ecafeteriaxxi.usermanagement.domain.model;
 
-import java.util.Set;
-
-import javax.validation.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
 /**
  * Based on https://github.com/Yoh0xFF/java-spring-security-example
  *
  */
-@Data
-@NoArgsConstructor
+@Value
 @AllArgsConstructor
-public class EditUserRequest {
-	@NotBlank
-	private String fullName;
+public class Role implements GrantedAuthority {
 
-	private Set<String> authorities;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String authority;
+
+	/*
+	 * roles
+	 */
+	public static final String USER_ADMIN = "USER_ADMIN";
+
+	public static final String DISH_ADMIN = "DISH_ADMIN";
+
 }

@@ -32,10 +32,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.User;
-import org.pagsousa.ecafeteriaxxi.usermanagement.repositories.UserRepository;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.Page;
-import org.pagsousa.ecafeteriaxxi.usermanagement.services.SearchUsersQuery;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.Page;
+import org.pagsousa.ecafeteriaxxi.usermanagement.application.SearchUsersQuery;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserRepository;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

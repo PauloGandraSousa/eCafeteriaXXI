@@ -18,7 +18,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.services;
+package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +26,8 @@ import java.util.Optional;
 import javax.validation.ValidationException;
 
 import org.pagsousa.ecafeteriaxxi.exceptions.ConflictException;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.User;
-import org.pagsousa.ecafeteriaxxi.usermanagement.repositories.UserRepository;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

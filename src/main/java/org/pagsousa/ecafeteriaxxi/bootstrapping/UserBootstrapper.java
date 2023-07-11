@@ -20,9 +20,9 @@
  */
 package org.pagsousa.ecafeteriaxxi.bootstrapping;
 
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.Role;
-import org.pagsousa.ecafeteriaxxi.usermanagement.model.User;
-import org.pagsousa.ecafeteriaxxi.usermanagement.repositories.UserRepository;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.Role;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
+import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -64,35 +64,35 @@ public class UserBootstrapper implements CommandLineRunner {
 		// user
 		if (userRepo.findByUsername("mary@mail.com").isEmpty()) {
 			final User u2 = new User("mary@mail.com", encoder.encode("myMy123!"));
-			u2.addAuthority(new Role(Role.FOO_ADMIN));
+			u2.addAuthority(new Role(Role.DISH_ADMIN));
 			userRepo.save(u2);
 		}
 
 		if (userRepo.findByUsername("mary1@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary1@mail.com", encoder.encode("myMy123!"), "Mary One", Role.FOO_ADMIN);
+			final User u2 = User.newUser("mary1@mail.com", encoder.encode("myMy123!"), "Mary One", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 
 		if (userRepo.findByUsername("mary2@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary2@mail.com", encoder.encode("myMy123!"), "Mary Two", Role.FOO_ADMIN);
+			final User u2 = User.newUser("mary2@mail.com", encoder.encode("myMy123!"), "Mary Two", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 
 		if (userRepo.findByUsername("mary3@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary3@mail.com", encoder.encode("myMy123!"), "Mary Three", Role.FOO_ADMIN);
+			final User u2 = User.newUser("mary3@mail.com", encoder.encode("myMy123!"), "Mary Three", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 		if (userRepo.findByUsername("mary4@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary4@mail.com", encoder.encode("myMy123!"), "Mary Four", Role.FOO_ADMIN);
+			final User u2 = User.newUser("mary4@mail.com", encoder.encode("myMy123!"), "Mary Four", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 		if (userRepo.findByUsername("mary5@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary5@mail.com", encoder.encode("myMy123!"), "Mary Five", Role.FOO_ADMIN);
+			final User u2 = User.newUser("mary5@mail.com", encoder.encode("myMy123!"), "Mary Five", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 
 		if (userRepo.findByUsername("adam2@mail.com").isEmpty()) {
-			final User u2 = User.newUser("adam2@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.FOO_ADMIN);
+			final User u2 = User.newUser("adam2@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 	}

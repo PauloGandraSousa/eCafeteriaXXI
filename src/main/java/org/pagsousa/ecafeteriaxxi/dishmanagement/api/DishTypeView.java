@@ -18,21 +18,24 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.pagsousa.ecafeteriaxxi.usermanagement.api;
+package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
-import java.util.List;
-
-import org.mapstruct.Mapper;
-import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
- * Based on https://github.com/Yoh0xFF/java-spring-security-example
+ *
+ * @author Paulo Gandra Sousa 06/07/2023.
  *
  */
-@Mapper(componentModel = "spring")
-public abstract class UserViewMapper {
+@Data
+@Schema(description = "A dish type")
+public class DishTypeView {
+	private String acronym;
 
-	public abstract UserView toUserView(User user);
+	private String shortDescription;
 
-	public abstract List<UserView> toUserView(List<User> users);
+	private String longDescription;
+
+	private boolean active;
 }
