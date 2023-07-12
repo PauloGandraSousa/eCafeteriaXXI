@@ -1,6 +1,7 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.application;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
 
@@ -15,6 +16,8 @@ import eapli.framework.general.domain.model.Description;
 public interface CreateOrReplaceDishTypeMapper {
 
 	DishType create(String acronym, CreateOrReplaceDishTypeRequest request);
+
+	void update(@MappingTarget DishType dt, CreateOrReplaceDishTypeRequest request);
 
 	/**
 	 * this mapper is used both for long and short description since we use the same

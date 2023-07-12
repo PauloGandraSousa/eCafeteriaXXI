@@ -56,43 +56,20 @@ public class UserBootstrapper implements CommandLineRunner {
 	public void run(final String... args) throws Exception {
 		// admin
 		if (userRepo.findByUsername("u1@mail.com").isEmpty()) {
-			final User u1 = new User("u1@mail.com", encoder.encode("Password1"));
+			final var u1 = new User("u1@mail.com", encoder.encode("Password1"));
 			u1.addAuthority(new Role(Role.USER_ADMIN));
 			userRepo.save(u1);
 		}
 
 		// user
 		if (userRepo.findByUsername("mary@mail.com").isEmpty()) {
-			final User u2 = new User("mary@mail.com", encoder.encode("myMy123!"));
+			final var u2 = new User("mary@mail.com", encoder.encode("myMy123!"));
 			u2.addAuthority(new Role(Role.DISH_ADMIN));
 			userRepo.save(u2);
 		}
 
-		if (userRepo.findByUsername("mary1@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary1@mail.com", encoder.encode("myMy123!"), "Mary One", Role.DISH_ADMIN);
-			userRepo.save(u2);
-		}
-
-		if (userRepo.findByUsername("mary2@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary2@mail.com", encoder.encode("myMy123!"), "Mary Two", Role.DISH_ADMIN);
-			userRepo.save(u2);
-		}
-
-		if (userRepo.findByUsername("mary3@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary3@mail.com", encoder.encode("myMy123!"), "Mary Three", Role.DISH_ADMIN);
-			userRepo.save(u2);
-		}
-		if (userRepo.findByUsername("mary4@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary4@mail.com", encoder.encode("myMy123!"), "Mary Four", Role.DISH_ADMIN);
-			userRepo.save(u2);
-		}
-		if (userRepo.findByUsername("mary5@mail.com").isEmpty()) {
-			final User u2 = User.newUser("mary5@mail.com", encoder.encode("myMy123!"), "Mary Five", Role.DISH_ADMIN);
-			userRepo.save(u2);
-		}
-
 		if (userRepo.findByUsername("adam2@mail.com").isEmpty()) {
-			final User u2 = User.newUser("adam2@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.DISH_ADMIN);
+			final var u2 = User.newUser("adam2@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.DISH_ADMIN);
 			userRepo.save(u2);
 		}
 	}

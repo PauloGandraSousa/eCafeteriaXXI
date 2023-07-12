@@ -32,8 +32,6 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
@@ -73,17 +71,15 @@ public class DishType implements AggregateRoot<DishTypeAcronym>, Serializable {
 	/**
 	 * mandatory
 	 */
-	@AttributeOverride(name = "value", column = @Column(name = "shortDescription"))
+	@AttributeOverride(name = "value", column = @Column(name = "shortDescription", nullable = false, length = 512))
 	private Description shortDescription;
 
 	/**
 	 * optional
 	 */
-	@Column(nullable = false, length = 1024)
-	@AttributeOverride(name = "value", column = @Column(name = "longDescription"))
+	@AttributeOverride(name = "value", column = @Column(name = "longDescription", nullable = true, length = 2048))
 	private Description longDescription;
 
-	@JsonProperty
 	private boolean active;
 
 	protected DishType() {

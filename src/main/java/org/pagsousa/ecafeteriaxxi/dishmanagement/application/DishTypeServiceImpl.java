@@ -2,6 +2,7 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.application;
 
 import java.util.Optional;
 
+import org.hibernate.StaleObjectStateException;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishTypeRepository;
@@ -68,14 +69,19 @@ public class DishTypeServiceImpl implements DishTypeService {
 	@Override
 	public DishType replace(final String acronym, final CreateOrReplaceDishTypeRequest request,
 			final long expectedVersion) {
-		// first let's check if the object exists so we don't create a new object with
-		// save
+		// first let's check if the object exists so we don't create a new object
 		final var foo = dishTypeRepo.findByAcronym(DishTypeAcronym.valueOf(acronym))
 				.orElseThrow(() -> new NotFoundException("Cannot update an object that does not yet exist"));
 
-		// apply update
-		foo.updateData(expectedVersion, request.getShortDescription(), request.getLongDescription());
+		// check current version so we don't execute unnecessary operations
+		if (foo.getVersion() != expectedVersion) {
+			throw new StaleObjectStateException("Object was already modified by another user", acronym);
+		}
+		// update data - full replace
+		dishTypeMapper.update(foo, request);
 
+		// the save() method in the repository will check again at the database level if
+		// the object was modified by another thread
 		return dishTypeRepo.save(foo);
 	}
 
