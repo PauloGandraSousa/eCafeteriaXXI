@@ -11,7 +11,7 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
  *
  */
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface PatchDishTypeMapper extends AbstractDishTypeMapper {
+interface PatchDishTypeMapper extends AbstractDishTypeMapper {
 
 	void patch(@MappingTarget DishType dt, CreateOrReplaceDishTypeRequest request);
 

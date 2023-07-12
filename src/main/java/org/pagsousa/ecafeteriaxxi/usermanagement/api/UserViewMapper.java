@@ -30,9 +30,9 @@ import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
  *
  */
 @Mapper(componentModel = "spring")
-public abstract class UserViewMapper {
+interface UserViewMapper {
 
-	public abstract UserView toUserView(User user);
+	UserView toUserView(User user);
 
-	public abstract List<UserView> toUserView(List<User> users);
+	List<UserView> toUserView(List<User> users);
 }

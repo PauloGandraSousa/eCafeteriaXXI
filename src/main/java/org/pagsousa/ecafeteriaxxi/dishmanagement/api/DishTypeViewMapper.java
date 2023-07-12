@@ -33,7 +33,7 @@ import eapli.framework.general.domain.model.Description;
  * @author Paulo Gandra Sousa 06/07/2023.
  */
 @Mapper(componentModel = "spring")
-public abstract class DishTypeViewMapper {
+abstract class DishTypeViewMapper {
 
 	public abstract DishTypeView toView(DishType dt);
 

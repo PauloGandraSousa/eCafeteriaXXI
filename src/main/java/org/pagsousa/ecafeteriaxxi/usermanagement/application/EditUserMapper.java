@@ -40,7 +40,7 @@ import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
  *
  */
 @Mapper(componentModel = "spring")
-public abstract class EditUserMapper {
+abstract class EditUserMapper {
 
 	@Mapping(source = "authorities", target = "authorities", qualifiedByName = "stringToRole")
 	public abstract User create(CreateUserRequest request);

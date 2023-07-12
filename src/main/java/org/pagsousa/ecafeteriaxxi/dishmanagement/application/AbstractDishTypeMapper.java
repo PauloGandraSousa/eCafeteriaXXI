@@ -9,7 +9,7 @@ import eapli.framework.general.domain.model.Description;
  * @author Paulo Gandra Sousa 06/07/2023.
  *
  */
-public interface AbstractDishTypeMapper {
+interface AbstractDishTypeMapper {
 
 	/**
 	 * this mapping is used both for long and short description since we use the

@@ -13,7 +13,7 @@ import eapli.framework.general.domain.model.Description;
  *
  */
 @Mapper(componentModel = "spring")
-public interface CreateOrReplaceDishTypeMapper extends AbstractDishTypeMapper {
+interface CreateOrReplaceDishTypeMapper extends AbstractDishTypeMapper {
 
 	DishType create(String acronym, CreateOrReplaceDishTypeRequest request);
 
