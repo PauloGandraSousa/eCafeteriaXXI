@@ -38,4 +38,12 @@ public interface DishTypeRepository {
 	 */
 	DishType save(DishType request);
 
+	/**
+	 *
+	 * @param valueOf
+	 * @param expectedVersion
+	 * @return
+	 */
+	int deleteByAcronymIfMatch(DishTypeAcronym valueOf, long expectedVersion);
+
 }

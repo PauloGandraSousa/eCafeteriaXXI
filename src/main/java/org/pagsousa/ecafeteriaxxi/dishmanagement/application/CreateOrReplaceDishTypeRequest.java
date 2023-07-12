@@ -25,6 +25,6 @@ public class CreateOrReplaceDishTypeRequest {
 	@Size(min = 1, max = 255)
 	private String shortDescription;
 
-	@Size(min = 1, max = 1024)
+	@Size(min = 1, max = 2048)
 	private String longDescription;
 }

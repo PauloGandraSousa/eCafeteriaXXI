@@ -71,7 +71,7 @@ public class DishType implements AggregateRoot<DishTypeAcronym>, Serializable {
 	/**
 	 * mandatory
 	 */
-	@AttributeOverride(name = "value", column = @Column(name = "shortDescription", nullable = false, length = 512))
+	@AttributeOverride(name = "value", column = @Column(name = "shortDescription", nullable = false, length = 256))
 	private Description shortDescription;
 
 	/**

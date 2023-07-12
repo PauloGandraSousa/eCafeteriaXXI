@@ -38,7 +38,7 @@ public interface DishTypeService {
 	 * @param request
 	 * @return
 	 */
-	DishType update(String acronym, UpdateDishTypeRequest request, long expectedVersion);
+	DishType update(String acronym, CreateOrReplaceDishTypeRequest request, long expectedVersion);
 
 	/**
 	 * full update
@@ -57,4 +57,12 @@ public interface DishTypeService {
 	 * @return
 	 */
 	DishType toogleState(String acronym, long expectedVersion);
+
+	/**
+	 *
+	 * @param acronym
+	 * @param expectedVersion
+	 * @return
+	 */
+	int deleteByAcronym(String acronym, long expectedVersion);
 }
