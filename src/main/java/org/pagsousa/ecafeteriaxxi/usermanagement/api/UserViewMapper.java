@@ -30,7 +30,7 @@ import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
  *
  */
 @Mapper(componentModel = "spring")
-interface UserViewMapper {
+public interface UserViewMapper {
 
 	UserView toUserView(User user);
 
