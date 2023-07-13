@@ -20,15 +20,15 @@
  */
 package org.pagsousa.ecafeteriaxxi.bootstrapping;
 
-import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.Role;
-import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
-import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserRepository;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishTypeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import eapli.framework.general.domain.model.Description;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -47,30 +47,19 @@ import lombok.RequiredArgsConstructor;
 @Profile("bootstrap")
 public class DishTypeBootstrapper implements CommandLineRunner {
 
-	private final UserRepository userRepo;
-
-	private final PasswordEncoder encoder;
+	private final DishTypeRepository repo;
 
 	@Override
 	@Transactional
 	public void run(final String... args) throws Exception {
-		// admin
-		if (userRepo.findByUsername("u1@mail.com").isEmpty()) {
-			final var u1 = new User("u1@mail.com", encoder.encode("Password1"));
-			u1.addAuthority(new Role(Role.USER_ADMIN));
-			userRepo.save(u1);
+		if (repo.findByAcronym(DishTypeAcronym.valueOf("peixe")).isEmpty()) {
+			final var u1 = new DishType(DishTypeAcronym.valueOf("peixe"), Description.valueOf("pratos do mar"));
+			repo.save(u1);
 		}
 
-		// user
-		if (userRepo.findByUsername("mary@mail.com").isEmpty()) {
-			final var u2 = new User("mary@mail.com", encoder.encode("myMy123!"));
-			u2.addAuthority(new Role(Role.DISH_ADMIN));
-			userRepo.save(u2);
-		}
-
-		if (userRepo.findByUsername("adam2@mail.com").isEmpty()) {
-			final var u2 = User.newUser("adam2@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.DISH_ADMIN);
-			userRepo.save(u2);
+		if (repo.findByAcronym(DishTypeAcronym.valueOf("carne")).isEmpty()) {
+			final var u1 = new DishType(DishTypeAcronym.valueOf("carne"), Description.valueOf("pratos da terra"));
+			repo.save(u1);
 		}
 	}
 }
