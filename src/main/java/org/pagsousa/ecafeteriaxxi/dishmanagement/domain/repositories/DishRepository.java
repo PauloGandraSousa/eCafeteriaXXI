@@ -45,4 +45,12 @@ public interface DishRepository {
 	 * @return
 	 */
 	Iterable<Dish> findAllDishesWithoutAllergen(Allergen a);
+
+	/**
+	 *
+	 * @param id
+	 * @param expectedVersion
+	 * @return
+	 */
+	int deleteByIdIfMatch(UUID id, long expectedVersion);
 }

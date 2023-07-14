@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Allergen;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import eapli.framework.infrastructure.repositories.impl.springdata.SpringDataBaseRepository;
@@ -32,4 +33,9 @@ public interface SpringDataDishRepository extends DishRepository, SpringDataBase
 	@Override
 	@Query("SELECT d FROM Dish d WHERE :allergen NOT MEMBER OF d.allergens")
 	Iterable<Dish> findAllDishesWithoutAllergen(final Allergen allergen);
+
+	@Override
+	@Modifying
+	@Query("DELETE FROM Dish f WHERE f.id = ?1 AND f.version = ?2")
+	int deleteByIdIfMatch(UUID id, long desiredVersion);
 }

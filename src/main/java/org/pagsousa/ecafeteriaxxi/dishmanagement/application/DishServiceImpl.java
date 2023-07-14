@@ -8,6 +8,7 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishRepository;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -89,7 +90,7 @@ public class DishServiceImpl implements DishService {
 	}
 
 	@Override
-	public Dish update(final String id, final UpdateDishRequest request, final Long expectedVersion) {
+	public Dish update(final String id, final UpdateDishRequest request, final long expectedVersion) {
 		final var dt = fetchCheckingVersion(id, expectedVersion);
 
 		// update data - partial replace
@@ -99,5 +100,11 @@ public class DishServiceImpl implements DishService {
 		// database, so concurrency control will still be applied when we try to save
 		// this updated object
 		return dishRepo.save(dt);
+	}
+
+	@Override
+	@Transactional
+	public int deleteById(final String id, final long expectedVersion) {
+		return dishRepo.deleteByIdIfMatch(UUID.fromString(id), expectedVersion);
 	}
 }

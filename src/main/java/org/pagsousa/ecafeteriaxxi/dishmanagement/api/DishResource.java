@@ -9,6 +9,7 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -106,5 +107,20 @@ public class DishResource {
 
 		final var d = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
 		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+	}
+
+	@Operation(summary = "Deletes an existing dish")
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<String> delete(final WebRequest request,
+			@PathVariable("id") @Parameter(description = "The id of the dish to delete") final String id) {
+		final var ifMatchValue = request.getHeader("If-Match");
+		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"You must issue a conditional DELETE using 'if-match'");
+		}
+		final var count = service.deleteById(id, getVersionFromIfMatchHeader(ifMatchValue));
+
+		// TODO check if we can distinguish between a 404 and a 412
+		return count == 1 ? ResponseEntity.noContent().build() : ResponseEntity.status(412).build();
 	}
 }
