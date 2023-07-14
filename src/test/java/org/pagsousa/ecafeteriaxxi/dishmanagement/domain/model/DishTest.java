@@ -65,7 +65,7 @@ class DishTest {
 
 		final var subject = buildDish();
 
-		assertThrows(IllegalArgumentException.class, () -> subject.changeNutricionalInfoTo(null));
+		assertThrows(IllegalArgumentException.class, () -> subject.setNutricionalInfo(null));
 	}
 
 	private Dish buildDish() {
@@ -83,7 +83,7 @@ class DishTest {
 		System.out.println("ChangePriceTo -New price info must not be null");
 
 		final var subject = buildDish();
-		assertThrows(IllegalArgumentException.class, () -> subject.changePriceTo(null));
+		assertThrows(IllegalArgumentException.class, () -> subject.setPrice(null));
 	}
 
 	@Test
@@ -92,6 +92,6 @@ class DishTest {
 
 		final var price = Money.euros(-1);
 		final var subject = buildDish();
-		assertThrows(IllegalArgumentException.class, () -> subject.changePriceTo(price));
+		assertThrows(IllegalArgumentException.class, () -> subject.setPrice(price));
 	}
 }

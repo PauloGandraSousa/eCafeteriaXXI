@@ -37,7 +37,7 @@ import lombok.RequiredArgsConstructor;
  * @author Paulo Gandra Sousa 06/07/2023.
  *
  */
-@Tag(name = "Dish management", description = "Endpoints for managing dishes and dish types")
+@Tag(name = "Dish management", description = "Endpoints for managing dish types")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dishtype")
@@ -66,10 +66,9 @@ public class DishTypeResource {
 	@GetMapping(value = "/{acronym}")
 	public ResponseEntity<DishTypeView> findByAcronym(
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to find") final String acronym) {
-		final var foo = service.findByAcronym(acronym)
-				.orElseThrow(() -> new NotFoundException(DishType.class, acronym));
+		final var dt = service.findByAcronym(acronym).orElseThrow(() -> new NotFoundException(DishType.class, acronym));
 
-		return ResponseEntity.ok().eTag(Long.toString(foo.getVersion())).body(viewMapper.toView(foo));
+		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
 	}
 
 	/**
@@ -82,7 +81,6 @@ public class DishTypeResource {
 	 * @return
 	 * @throws URISyntaxException
 	 */
-	//
 	@Operation(summary = "Fully replaces an existing dish type or creates a new one if the specified acronym does not exist.")
 	@PutMapping(value = "/{acronym}")
 	public ResponseEntity<DishTypeView> upsert(final WebRequest request,
@@ -134,7 +132,7 @@ public class DishTypeResource {
 	@PostMapping("/{acronym}/state")
 	public ResponseEntity<DishTypeView> toogleState(final WebRequest request,
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to update") final String acronym,
-			@Valid @RequestBody final ToogleStateRequest resource) {
+			@Valid @RequestBody final EmptyRequest resource) {
 		final var ifMatchValue = request.getHeader("If-Match");
 		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,

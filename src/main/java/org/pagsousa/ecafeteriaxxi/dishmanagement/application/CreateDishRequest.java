@@ -9,19 +9,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * the DTO for creation or full update of a dishtype
+ * the DTO for creation of a dish
  *
- * @author Paulo Gandra Sousa 06/07/2023.
+ * @author Paulo Gandra Sousa 13/07/2023.
  *
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateOrReplaceDishTypeRequest {
+public class CreateDishRequest {
+
+	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 100)
+	private String name;
+
+	@NotNull
+	@NotBlank
+	private String price;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 255)
 	private String shortDescription;
+
+	@NotNull
+	@NotBlank
+	private String dishType;
 
 	@Size(min = 1, max = 2048)
 	private String longDescription;

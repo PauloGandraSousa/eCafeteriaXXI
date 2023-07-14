@@ -18,6 +18,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.Type;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishesPerCaloricCategory;
 
 import eapli.framework.domain.model.AggregateRoot;
@@ -73,7 +74,7 @@ import eapli.framework.validations.Preconditions;
 		+ "GROUP BY caloricCategory", resultSetMapping = "DishesPerCaloricCategoryMapping")
 @SqlResultSetMapping(name = "DishesPerCaloricCategoryMapping", classes = @ConstructorResult(targetClass = DishesPerCaloricCategory.class, columns = {
 		@ColumnResult(name = "caloricCategory"), @ColumnResult(name = "n") }))
-public class Dish implements AggregateRoot<Designation> {
+public class Dish implements AggregateRoot<UUID> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -83,14 +84,25 @@ public class Dish implements AggregateRoot<Designation> {
 	 */
 	public static final Set<Allergen> NO_ALLERGENS = Collections.emptySet();
 
+	/**
+	 * business identity. this is an example of a server-generated identity since
+	 * the "real" business identity would be the name of the dish. However, dish
+	 * names might not be compliant with URI sintax and as such cannot be used to
+	 * identify the resource in the REST API.
+	 * <p>
+	 * We use the Hibernate Type annotation to instruct how to map the UUID to the
+	 * database schema
+	 */
 	@Id
+	@Type(type = "uuid-char")
 	private UUID id;
 
 	@Version
-	private Long version;
+	private long version;
 
 	/**
-	 * business identity
+	 * "natural" business identity. eventough there might be more than one recipe
+	 * for a single dish... we are not covering that case
 	 */
 	private Designation name;
 
@@ -122,9 +134,12 @@ public class Dish implements AggregateRoot<Designation> {
 	 * @param name
 	 * @param price
 	 */
-	protected Dish(final DishType dishType, final Designation name, final Money price,
+	public Dish(final DishType dishType, final Designation name, final Money price,
 			final Description shortDescription) {
 		Preconditions.noneNull(dishType, name, price, shortDescription);
+
+		// generate unique id
+		this.id = UUID.randomUUID();
 
 		this.dishType = dishType;
 		this.name = name;
@@ -167,28 +182,40 @@ public class Dish implements AggregateRoot<Designation> {
 		return areEqual;
 	}
 
-	public DishType dishType() {
+	public DishType getDishType() {
 		return dishType;
 	}
 
 	@Override
-	public Designation identity() {
-		return name;
+	public UUID identity() {
+		return id;
 	}
 
 	/**
 	 *
 	 * @return the nutricionalInfo of this dish
 	 */
-	public Optional<NutricionalInfo> nutricionalInfo() {
+	public Optional<NutricionalInfo> getNutricionalInfo() {
 		return Optional.ofNullable(nutricionalInfo);
+	}
+
+	public Optional<Description> getLongDescription() {
+		return Optional.ofNullable(longDescription);
+	}
+
+	public Description getShortDescription() {
+		return shortDescription;
+	}
+
+	public UUID getId() {
+		return id;
 	}
 
 	/**
 	 *
 	 * @return the dish name
 	 */
-	public Designation name() {
+	public Designation getName() {
 		return name;
 	}
 
@@ -196,7 +223,7 @@ public class Dish implements AggregateRoot<Designation> {
 	 *
 	 * @return the current dish price
 	 */
-	public Money currentPrice() {
+	public Money getPrice() {
 		return price;
 	}
 
@@ -223,7 +250,7 @@ public class Dish implements AggregateRoot<Designation> {
 	 *
 	 * @param newNutricionalInfo
 	 */
-	public void changeNutricionalInfoTo(final NutricionalInfo newNutricionalInfo) {
+	public void setNutricionalInfo(final NutricionalInfo newNutricionalInfo) {
 		Preconditions.nonNull(newNutricionalInfo);
 		nutricionalInfo = newNutricionalInfo;
 	}
@@ -233,7 +260,7 @@ public class Dish implements AggregateRoot<Designation> {
 	 *
 	 * @param newPrice the new price of this dish
 	 */
-	public void changePriceTo(final Money newPrice) {
+	public void setPrice(final Money newPrice) {
 		Preconditions.noneNull(newPrice);
 		Preconditions.ensure(newPrice.signum() >= 0);
 
@@ -275,8 +302,8 @@ public class Dish implements AggregateRoot<Designation> {
 
 		dishType = type;
 		this.active = active;
-		changePriceTo(price);
-		changeNutricionalInfoTo(nutricionalInfo);
+		setPrice(price);
+		setNutricionalInfo(nutricionalInfo);
 	}
 
 	@Override
@@ -286,5 +313,9 @@ public class Dish implements AggregateRoot<Designation> {
 
 	public void setLongDescription(final Description longDescription) {
 		this.longDescription = longDescription;
+	}
+
+	public long getVersion() {
+		return version;
 	}
 }

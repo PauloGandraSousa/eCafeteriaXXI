@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 
 /**
- * the typical architecture of a REST resource uses a single Service to handle
- * all the use cases. alternatively we could use a separate use case controller
+ * The typical architecture of a REST resource uses a single Service to handle
+ * all the use cases. Alternatively we could use a separate use case controller
  * class for each operation.
  *
  * @author Paulo Gandra Sousa 06/07/2023.

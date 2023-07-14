@@ -35,14 +35,14 @@ public class NutricionalInfo implements ValueObject, Serializable {
 
 	/**
 	 * Special case value of unknown nutricional info. Even tough
-	 * {@link Dish#nutricionalInfo()} returns an Optional it might be helpful to
+	 * {@link Dish#getNutricionalInfo()} returns an Optional it might be helpful to
 	 * have a "Null value".
 	 */
 	public static final NutricionalInfo UNKNOWN = new NutricionalInfo();
 
-	private final int caloriesInKCalPer100;
+	private final Integer caloriesInKCalPer100;
 
-	private final int saltInGPer100;
+	private final Integer saltInGPer100;
 
 	/**
 	 *

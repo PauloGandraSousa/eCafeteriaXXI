@@ -71,7 +71,7 @@ public class DishBuilder implements DomainFactory<Dish> {
 	 */
 	public DishBuilder withNutricionalInfo(final NutricionalInfo nut) {
 		buildOrThrow();
-		theDish.changeNutricionalInfoTo(nut);
+		theDish.setNutricionalInfo(nut);
 		return this;
 	}
 
