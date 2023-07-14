@@ -385,6 +385,9 @@
 											"pm.test(\"Created\", function(){\r",
 											"\r",
 											"    pm.response.to.have.status(201); \r",
+											"\r",
+											"        let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag); \r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -426,6 +429,9 @@
 											"pm.test(\"Created\", function(){\r",
 											"\r",
 											"    pm.response.to.have.status(201); \r",
+											"\r",
+											"        let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag); \r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -467,6 +473,9 @@
 											"pm.test(\"Created\", function(){\r",
 											"\r",
 											"    pm.response.to.have.status(201); \r",
+											"\r",
+											"        let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag); \r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -928,7 +937,7 @@
 							"response": []
 						},
 						{
-							"name": "Update existing FOO just width and length - description must remain the same",
+							"name": "Update existing just shortDescription - other fields remain the same",
 							"event": [
 								{
 									"listen": "test",
@@ -1345,6 +1354,9 @@
 											"    var jsonData = pm.response.json();\r",
 											"    console.log(jsonData);\r",
 											"    pm.environment.set(\"bacalhauUUID\", jsonData.id);\r",
+											"\r",
+											"    let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag);    \r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -1356,7 +1368,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\":\"Bacalhau à Bráz (ou zé do pipo?)\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"realmente delicioso mas não sei o nome\",\r\n    \"price\":\"3.49 EUR\"\r\n}",
+									"raw": "{\r\n    \"name\":\"Bacalhau à Bráz ({{$randomNoun}})\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"realmente delicioso mas não sei o nome\",\r\n    \"price\":\"3.49 EUR\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1592,7 +1604,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"shortDescription\": \"{{$randomLoremSentence}}\",\r\n    \"longDescription\": \"{{$randomLoremParagraph}}\"\r\n    }",
+									"raw": "{\r\n    \"name\":\"(*edited*) Bacalhau à Bráz (ou zé do pipo?)\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"(*edited*) realmente delicioso mas não sei o nome\",\r\n    \"longDescription\":\"{{$randomLoremParagraph}}\",\r\n    \"price\":\"11.99 EUR\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1600,13 +1612,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1642,7 +1654,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"shortDescription\":\"0123456\"\r\n}",
+									"raw": "{\r\n    \"name\":\"(*edited*) Bacalhau à Bráz (ou zé do pipo?)\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"(*edited*) realmente delicioso mas não sei o nome\",\r\n    \"price\":\"11.99 EUR\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1650,13 +1662,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1689,7 +1701,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"shortDescription\":\"0123456\"\r\n}",
+									"raw": "{\r\n    \"name\":\"(*edited*) Bacalhau à Bráz (ou zé do pipo?)\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"(*edited*) realmente delicioso mas não sei o nome\",\r\n    \"longDescription\":\"{{$randomLoremParagraph}}\",\r\n    \"price\":\"11.99 EUR\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1697,13 +1709,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1739,7 +1751,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n   \"shortDescription\": \"{{$randomLoremSentence}}\",\r\n    \"longDescription\": \"{{$randomLoremParagraph}}\"\r\n}",
+									"raw": "{\r\n    \"name\":\"(*edited*) Bacalhau à Bráz (ou zé do pipo?)\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"(*edited*) realmente delicioso mas não sei o nome\",\r\n    \"longDescription\":\"{{$randomLoremParagraph}}\",\r\n    \"price\":\"11.99 EUR\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1747,20 +1759,20 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Update existing FOO just width and length - description must remain the same",
+							"name": "Update existing just one field - other remain the same",
 							"event": [
 								{
 									"listen": "test",
@@ -1789,7 +1801,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n   \"shortDescription\": \"{{$randomLoremSentence}}\"\r\n}",
+									"raw": "{\r\n    \"name\":\"(*more edited*) Bacalhau à Bráz (ou zé do pipo?)\",\r\n    \"dishType\":\"peixe\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1797,13 +1809,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1846,13 +1858,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1893,13 +1905,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1934,13 +1946,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe"
+										"dish",
+										"{{bacalhauUUID}}"
 									]
 								}
 							},
@@ -1981,13 +1993,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/0",
+									"raw": "{{host}}{{baseUrl}}/dish/6856facb-cec1-4bea-9264-d2c356292489",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"0"
+										"dish",
+										"6856facb-cec1-4bea-9264-d2c356292489"
 									]
 								}
 							},
@@ -2014,13 +2026,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}{{baseUrl}}/dishtype/peixe/state",
+									"raw": "{{host}}{{baseUrl}}/dish/{{bacalhauUUID}}/state",
 									"host": [
 										"{{host}}{{baseUrl}}"
 									],
 									"path": [
-										"dishtype",
-										"peixe",
+										"dish",
+										"{{bacalhauUUID}}",
 										"state"
 									],
 									"query": [
