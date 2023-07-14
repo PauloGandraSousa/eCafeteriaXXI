@@ -3,9 +3,50 @@
 		"_postman_id": "7711ae43-90e4-4365-a4ff-7423acc386be",
 		"name": "eCafeteria XXI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1425498"
+		"_exporter_id": "1425498",
+		"_collection_link": "https://lively-escape-360163.postman.co/workspace/EAPLI~daf07218-5ca9-4532-b501-ded9e6ef45a1/collection/1425498-7711ae43-90e4-4365-a4ff-7423acc386be?action=share&creator=1425498&source=collection_link"
 	},
 	"item": [
+		{
+			"name": "doc",
+			"item": [
+				{
+					"name": "OpenAPI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api-docs/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api-docs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Swagger UI",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/swagger-ui",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"swagger-ui"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Authz",
 			"item": [
@@ -2081,38 +2122,79 @@
 			]
 		},
 		{
-			"name": "doc",
+			"name": "Dish reporting",
 			"item": [
 				{
-					"name": "OpenAPI",
+					"name": "High calories dishes",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api-docs/",
+							"raw": "{{host}}{{baseUrl}}/reporting/dish/high-calories-dishes",
 							"host": [
-								"{{host}}"
+								"{{host}}{{baseUrl}}"
 							],
 							"path": [
-								"api-docs",
-								""
+								"reporting",
+								"dish",
+								"high-calories-dishes"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Swagger UI",
+					"name": "Dishes per dish type",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/swagger-ui",
+							"raw": "{{host}}{{baseUrl}}/reporting/dish/dishes-per-dishtype",
 							"host": [
-								"{{host}}"
+								"{{host}}{{baseUrl}}"
 							],
 							"path": [
-								"swagger-ui"
+								"reporting",
+								"dish",
+								"dishes-per-dishtype"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dishes per caloric category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/reporting/dish/dishes-per-caloric-category",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"reporting",
+								"dish",
+								"dishes-per-caloric-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dishes per caloric category (tuples)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/reporting/dish/dishes-per-caloric-category-tuples",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"reporting",
+								"dish",
+								"dishes-per-caloric-category-tuples"
 							]
 						}
 					},
