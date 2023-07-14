@@ -57,4 +57,11 @@ public interface DishService {
 	 */
 	int deleteById(String id, long expectedVersion);
 
+	/**
+	 *
+	 * @param id
+	 * @param expectedVersion
+	 * @return
+	 */
+	Dish toogleState(String id, long expectedVersion);
 }

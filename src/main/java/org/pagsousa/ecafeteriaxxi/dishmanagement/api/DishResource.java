@@ -7,7 +7,6 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.application.DishService;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.UpdateDishRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,17 +38,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dish")
-public class DishResource {
+public class DishResource extends AbstractResource {
 
 	private final DishService service;
 	private final DishViewMapper viewMapper;
-
-	private Long getVersionFromIfMatchHeader(final String ifMatchHeader) {
-		if (ifMatchHeader.startsWith("\"")) {
-			return Long.parseLong(ifMatchHeader.substring(1, ifMatchHeader.length() - 1));
-		}
-		return Long.parseLong(ifMatchHeader);
-	}
 
 	@Operation(summary = "Gets all dishes")
 	@ApiResponse(description = "Success", responseCode = "200", content = { @Content(mediaType = "application/json",
@@ -84,12 +75,7 @@ public class DishResource {
 	public ResponseEntity<DishView> upsert(final WebRequest request,
 			@PathVariable("id") @Parameter(description = "The id of the dish to replace") final String id,
 			@Valid @RequestBody final CreateOrReplaceDishRequest resource) {
-		final var ifMatchValue = request.getHeader("If-Match");
-		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-					"You must issue a conditional PUT using 'if-match'");
-		}
-		// if-match header was sent, so we are in UPDATE mode
+		final var ifMatchValue = ensureIfMatchHeader(request);
 		final var d = service.replace(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
 		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
 	}
@@ -99,12 +85,7 @@ public class DishResource {
 	public ResponseEntity<DishView> partialUpdate(final WebRequest request,
 			@PathVariable("id") @Parameter(description = "The id of the dish to update") final String id,
 			@Valid @RequestBody final UpdateDishRequest resource) {
-		final var ifMatchValue = request.getHeader("If-Match");
-		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-					"You must issue a conditional PATCH using 'if-match'");
-		}
-
+		final var ifMatchValue = ensureIfMatchHeader(request);
 		final var d = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
 		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
 	}
@@ -113,14 +94,19 @@ public class DishResource {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<String> delete(final WebRequest request,
 			@PathVariable("id") @Parameter(description = "The id of the dish to delete") final String id) {
-		final var ifMatchValue = request.getHeader("If-Match");
-		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-					"You must issue a conditional DELETE using 'if-match'");
-		}
+		final var ifMatchValue = ensureIfMatchHeader(request);
 		final var count = service.deleteById(id, getVersionFromIfMatchHeader(ifMatchValue));
-
 		// TODO check if we can distinguish between a 404 and a 412
 		return count == 1 ? ResponseEntity.noContent().build() : ResponseEntity.status(412).build();
+	}
+
+	@Operation(summary = "Toogles the state of an existing dish")
+	@PostMapping("/{id}/state")
+	public ResponseEntity<DishView> toogleState(final WebRequest request,
+			@PathVariable("id") @Parameter(description = "The id of the dish to update") final String id,
+			@Valid @RequestBody final EmptyRequest resource) {
+		final var ifMatchValue = ensureIfMatchHeader(request);
+		final var dt = service.toogleState(id, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
 	}
 }

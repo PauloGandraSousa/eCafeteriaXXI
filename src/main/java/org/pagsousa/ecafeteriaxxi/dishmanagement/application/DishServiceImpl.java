@@ -107,4 +107,16 @@ public class DishServiceImpl implements DishService {
 	public int deleteById(final String id, final long expectedVersion) {
 		return dishRepo.deleteByIdIfMatch(UUID.fromString(id), expectedVersion);
 	}
+
+	@Override
+	public Dish toogleState(final String id, final long expectedVersion) {
+		final var d = fetchCheckingVersion(id, expectedVersion);
+
+		// update data - full replace
+		d.toogleState();
+
+		// the save() method in the repository will check again at the database level if
+		// the object was modified by another thread
+		return dishRepo.save(d);
+	}
 }
