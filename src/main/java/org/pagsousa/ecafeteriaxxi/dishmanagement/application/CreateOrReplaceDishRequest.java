@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateDishRequest {
+public class CreateOrReplaceDishRequest {
 
 	@NotNull
 	@NotBlank
@@ -33,6 +34,7 @@ public class CreateDishRequest {
 	@Size(min = 1, max = 255)
 	private String shortDescription;
 
+	@Schema(required = true, description = "The acronym of the dish type")
 	@NotNull
 	@NotBlank
 	private String dishType;

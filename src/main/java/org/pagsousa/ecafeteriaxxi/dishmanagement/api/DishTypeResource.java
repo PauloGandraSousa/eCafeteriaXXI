@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.CreateOrReplaceDishTypeRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.DishTypeService;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.application.UpdateDishTypeRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -102,7 +103,7 @@ public class DishTypeResource {
 	@PatchMapping(value = "/{acronym}")
 	public ResponseEntity<DishTypeView> partialUpdate(final WebRequest request,
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to update") final String acronym,
-			@Valid @RequestBody final CreateOrReplaceDishTypeRequest resource) {
+			@Valid @RequestBody final UpdateDishTypeRequest resource) {
 		final var ifMatchValue = request.getHeader("If-Match");
 		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,

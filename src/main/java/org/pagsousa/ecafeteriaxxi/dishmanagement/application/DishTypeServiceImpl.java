@@ -57,8 +57,7 @@ public class DishTypeServiceImpl implements DishTypeService {
 	 * @return
 	 */
 	@Override
-	public DishType update(final String acronym, final CreateOrReplaceDishTypeRequest request,
-			final long expectedVersion) {
+	public DishType update(final String acronym, final UpdateDishTypeRequest request, final long expectedVersion) {
 		final var dt = fetchCheckingVersion(acronym, expectedVersion);
 
 		// update data - partial replace

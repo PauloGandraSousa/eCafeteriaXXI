@@ -29,6 +29,24 @@ public interface DishService {
 	 * @param resource
 	 * @return
 	 */
-	Dish create(CreateDishRequest resource);
+	Dish create(CreateOrReplaceDishRequest resource);
+
+	/**
+	 *
+	 * @param id
+	 * @param resource
+	 * @param versionFromIfMatchHeader
+	 * @return
+	 */
+	Dish replace(String id, CreateOrReplaceDishRequest resource, long expectedVersion);
+
+	/**
+	 *
+	 * @param id
+	 * @param resource
+	 * @param versionFromIfMatchHeader
+	 * @return
+	 */
+	Dish update(String id, UpdateDishRequest resource, Long expectedVersion);
 
 }

@@ -79,12 +79,6 @@ public class Dish implements AggregateRoot<UUID> {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Immutable empty set of allergens for the situations where a dish does not
-	 * contain any allergen.
-	 */
-	public static final Set<Allergen> NO_ALLERGENS = Collections.emptySet();
-
-	/**
 	 * business identity. this is an example of a server-generated identity since
 	 * the "real" business identity would be the name of the dish. However, dish
 	 * names might not be compliant with URI sintax and as such cannot be used to
@@ -102,8 +96,9 @@ public class Dish implements AggregateRoot<UUID> {
 
 	/**
 	 * "natural" business identity. eventough there might be more than one recipe
-	 * for a single dish... we are not covering that case
+	 * for a single dish... we are not covering that case.
 	 */
+	@AttributeOverride(name = "name", column = @Column(unique = true, nullable = false, updatable = true, length = 100))
 	private Designation name;
 
 	/**
@@ -186,6 +181,11 @@ public class Dish implements AggregateRoot<UUID> {
 		return dishType;
 	}
 
+	public void setDishType(final DishType dt) {
+		Preconditions.nonNull(dt);
+		this.dishType = dt;
+	}
+
 	@Override
 	public UUID identity() {
 		return id;
@@ -207,6 +207,15 @@ public class Dish implements AggregateRoot<UUID> {
 		return shortDescription;
 	}
 
+	/**
+	 *
+	 * @param shortDescription
+	 */
+	public void setShortDescription(final Description shortDescription) {
+		Preconditions.nonNull(shortDescription);
+		this.shortDescription = shortDescription;
+	}
+
 	public UUID getId() {
 		return id;
 	}
@@ -217,6 +226,15 @@ public class Dish implements AggregateRoot<UUID> {
 	 */
 	public Designation getName() {
 		return name;
+	}
+
+	/**
+	 *
+	 * @param name
+	 */
+	public void setName(final Designation name) {
+		Preconditions.nonNull(name);
+		this.name = name;
 	}
 
 	/**

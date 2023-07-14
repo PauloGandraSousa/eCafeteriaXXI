@@ -1,7 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.application;
 
-import org.mapstruct.Mapper;
-import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishTypeRepository;
@@ -16,13 +14,10 @@ import eapli.framework.money.domain.model.Money;
  * @author Paulo Gandra Sousa 14/07/2023.
  *
  */
-@Mapper(componentModel = "spring")
-abstract class CreateDishMapper {
+abstract class AbstractDishMapper {
 
 	@Autowired
 	private DishTypeRepository dishTypeRepo;
-
-	public abstract Dish create(CreateDishRequest request);
 
 	public Money toMoney(final String price) {
 		return Money.valueOf(price);

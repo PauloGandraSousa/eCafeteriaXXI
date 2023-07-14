@@ -60,7 +60,7 @@ public class DishType implements AggregateRoot<DishTypeAcronym>, Serializable {
 	 * optimistic locking
 	 */
 	@Version
-	private Long version;
+	private long version;
 
 	/**
 	 * Business identity. Needs to be unique, thus we add the unique constraint on

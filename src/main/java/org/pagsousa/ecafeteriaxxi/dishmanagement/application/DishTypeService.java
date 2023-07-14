@@ -38,7 +38,7 @@ public interface DishTypeService {
 	 * @param request
 	 * @return
 	 */
-	DishType update(String acronym, CreateOrReplaceDishTypeRequest request, long expectedVersion);
+	DishType update(String acronym, UpdateDishTypeRequest request, long expectedVersion);
 
 	/**
 	 * full update

@@ -3,16 +3,16 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.application;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
 
 /**
  *
- * @author Paulo Gandra Sousa 06/07/2023.
+ * @author Paulo Gandra Sousa 14/07/2023.
  *
  */
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-interface PatchDishTypeMapper extends AbstractDishTypeMapper {
+abstract class PatchDishMapper extends AbstractDishMapper {
 
-	void patch(@MappingTarget DishType dt, UpdateDishTypeRequest request);
+	public abstract void patch(@MappingTarget Dish d, UpdateDishRequest request);
 
 }

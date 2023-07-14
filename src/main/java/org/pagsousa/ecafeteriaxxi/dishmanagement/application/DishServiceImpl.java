@@ -3,8 +3,10 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.application;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.hibernate.StaleObjectStateException;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishRepository;
+import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class DishServiceImpl implements DishService {
 
 	private final DishRepository dishRepo;
-	private final CreateDishMapper createMapper;
+	private final CreateOrReplaceDishMapper createOrReplaceMapper;
+	private final PatchDishMapper patchMapper;
 
 	/**
 	 *
@@ -40,13 +43,61 @@ public class DishServiceImpl implements DishService {
 	 * @return
 	 */
 	@Override
-	public Dish create(final CreateDishRequest request) {
-		final var d = createMapper.create(request);
+	public Dish create(final CreateOrReplaceDishRequest request) {
+		final var d = createOrReplaceMapper.create(request);
 		return dishRepo.save(d);
 	}
 
 	@Override
 	public Optional<Dish> findById(final String uuid) {
 		return dishRepo.findById(UUID.fromString(uuid));
+	}
+
+	@Override
+	public Dish replace(final String id, final CreateOrReplaceDishRequest request, final long expectedVersion) {
+		final var dt = fetchCheckingVersion(id, expectedVersion);
+
+		// update data - full replace
+		createOrReplaceMapper.replace(dt, request);
+
+		// in the meantime some other user might have changed this object on the
+		// database, so concurrency control will still be applied when we try to save
+		// this updated object
+		return dishRepo.save(dt);
+	}
+
+	/**
+	 * fetches the dish from the repository, checking if it is currently in the
+	 * expected version or if it has been updated by another user.
+	 *
+	 * @param acronym
+	 * @param expectedVersion
+	 * @return
+	 * @throws NotFoundException
+	 * @throws StaleObjectStateException
+	 */
+	private Dish fetchCheckingVersion(final String id, final long expectedVersion) {
+		// first let's check if the object exists so we don't create a new object
+		final var d = findById(id)
+				.orElseThrow(() -> new NotFoundException("Cannot update an object that does not yet exist"));
+
+		// check current version so we don't execute unnecessary operations
+		if (d.getVersion() != expectedVersion) {
+			throw new StaleObjectStateException("Object was already modified by another user", id);
+		}
+		return d;
+	}
+
+	@Override
+	public Dish update(final String id, final UpdateDishRequest request, final Long expectedVersion) {
+		final var dt = fetchCheckingVersion(id, expectedVersion);
+
+		// update data - partial replace
+		patchMapper.patch(dt, request);
+
+		// in the meantime some other user might have changed this object on the
+		// database, so concurrency control will still be applied when we try to save
+		// this updated object
+		return dishRepo.save(dt);
 	}
 }

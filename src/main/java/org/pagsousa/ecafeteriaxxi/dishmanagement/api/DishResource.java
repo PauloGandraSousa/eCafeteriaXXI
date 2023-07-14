@@ -2,17 +2,23 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
 import javax.validation.Valid;
 
-import org.pagsousa.ecafeteriaxxi.dishmanagement.application.CreateDishRequest;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.application.CreateOrReplaceDishRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.DishService;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.application.UpdateDishRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -65,11 +71,40 @@ public class DishResource {
 
 	@Operation(summary = "Creates a new dish")
 	@PostMapping
-	public ResponseEntity<DishView> create(@Valid @RequestBody final CreateDishRequest resource) {
+	public ResponseEntity<DishView> create(@Valid @RequestBody final CreateOrReplaceDishRequest resource) {
 		final var d = service.create(resource);
 		final var dishUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(d.identity().toString())
 				.build().toUri();
 		return ResponseEntity.created(dishUri).eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
 	}
 
+	@Operation(summary = "Fully replaces an existing dish.")
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<DishView> upsert(final WebRequest request,
+			@PathVariable("id") @Parameter(description = "The id of the dish to replace") final String id,
+			@Valid @RequestBody final CreateOrReplaceDishRequest resource) {
+		final var ifMatchValue = request.getHeader("If-Match");
+		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"You must issue a conditional PUT using 'if-match'");
+		}
+		// if-match header was sent, so we are in UPDATE mode
+		final var d = service.replace(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+	}
+
+	@Operation(summary = "Partially updates an existing dish")
+	@PatchMapping(value = "/{id}")
+	public ResponseEntity<DishView> partialUpdate(final WebRequest request,
+			@PathVariable("id") @Parameter(description = "The id of the dish to update") final String id,
+			@Valid @RequestBody final UpdateDishRequest resource) {
+		final var ifMatchValue = request.getHeader("If-Match");
+		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"You must issue a conditional PATCH using 'if-match'");
+		}
+
+		final var d = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+	}
 }
