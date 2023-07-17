@@ -20,6 +20,7 @@
  */
 package org.pagsousa.ecafeteriaxxi.exceptions;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -99,7 +100,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiCallError<>("Conflict", details.entrySet()));
 	}
 
-	@ExceptionHandler({ IllegalArgumentException.class, NumberFormatException.class })
+	@ExceptionHandler({ IllegalArgumentException.class, NumberFormatException.class, DateTimeParseException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	protected ResponseEntity<Object> handleIllegalArgument(final HttpServletRequest request,
 			final IllegalArgumentException ex) {

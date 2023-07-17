@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Allergen;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 
 /**
  *
@@ -53,4 +54,11 @@ public interface DishRepository {
 	 * @return
 	 */
 	int deleteByIdIfMatch(UUID id, long expectedVersion);
+
+	/**
+	 *
+	 * @param dt
+	 * @return
+	 */
+	Iterable<Dish> findAllByDishType(DishType dt);
 }

@@ -47,4 +47,6 @@ public class Role implements GrantedAuthority {
 
 	public static final String DISH_ADMIN = "DISH_ADMIN";
 
+	public static final String MEAL_ADMIN = "MEAL_ADMIN";
+
 }

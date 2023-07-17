@@ -166,6 +166,51 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Login as Adam (meal manager)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Authtenticates\", function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let token = postman.getResponseHeader(\"Authorization\");\r",
+									"    pm.environment.set(\"token\", token);    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"adam@mail.com\",\r\n    \"password\":\"myMy123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}{{baseUrl}}/public/login",
+							"host": [
+								"{{host}}{{baseUrl}}"
+							],
+							"path": [
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1449,7 +1494,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\":\"{{$randomNoun}}\",\r\n    \"dishType\":\"peixe\",\r\n    \"shortDescription\":\"{{$randomLoremSentence}}\",\r\n    \"price\":\"3.49 EUR\"\r\n}",
+									"raw": "{\r\n    \"name\":\"{{$randomNoun}}\",\r\n    \"dishType\":\"carne\",\r\n    \"shortDescription\":\"{{$randomLoremSentence}}\",\r\n    \"price\":\"3.49 EUR\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2199,6 +2244,72 @@
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meal management",
+			"item": [
+				{
+					"name": "private",
+					"item": [
+						{
+							"name": "Meal plan",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"from\": \"2023-07-11\",\r\n    \"to\": \"2023-07-11\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/mealplan",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"mealplan"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
 				}
 			]
 		}

@@ -68,8 +68,8 @@ public class UserBootstrapper implements CommandLineRunner {
 			userRepo.save(u2);
 		}
 
-		if (userRepo.findByUsername("adam2@mail.com").isEmpty()) {
-			final var u2 = User.newUser("adam2@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.DISH_ADMIN);
+		if (userRepo.findByUsername("adam@mail.com").isEmpty()) {
+			final var u2 = User.newUser("adam@mail.com", encoder.encode("myMy123!"), "Adam Two", Role.MEAL_ADMIN);
 			userRepo.save(u2);
 		}
 	}

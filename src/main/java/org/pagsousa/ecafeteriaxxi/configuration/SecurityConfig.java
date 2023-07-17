@@ -125,6 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/admin/user/**").hasRole(Role.USER_ADMIN) // user management
 				.antMatchers("/api/dishtype/**").hasRole(Role.DISH_ADMIN) // dish type management
 				.antMatchers("/api/dish/**").hasRole(Role.DISH_ADMIN) // dish management
+				.antMatchers("/api/mealplan/**").hasRole(Role.MEAL_ADMIN) // dish management
 				.anyRequest().authenticated()
 				// Set up oauth2 resource server
 				.and().httpBasic(Customizer.withDefaults()).oauth2ResourceServer().jwt();

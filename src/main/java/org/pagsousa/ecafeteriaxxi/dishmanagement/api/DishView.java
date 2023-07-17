@@ -15,6 +15,8 @@ public class DishView {
 
 	private String name;
 
+	private String dishType;
+
 	private String shortDescription;
 
 	/**
