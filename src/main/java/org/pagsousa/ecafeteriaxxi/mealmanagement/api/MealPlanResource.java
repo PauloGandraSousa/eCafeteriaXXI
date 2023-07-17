@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.Valid;
 
-import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services.MealPlanningService;
+import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services.MealPlanService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,15 +25,15 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/mealplan")
 public class MealPlanResource {
 
-	private final MealPlanningService service;
+	private final MealPlanService service;
 	private final MealViewMapper viewMapper;
 
-	@Operation(summary = "Generates the menu for a certain period")
+	@Operation(summary = "Generates the menu for a certain period.", description = "Generates a meal plan for a certain period")
 	@PostMapping
 	public Iterable<MealView> plan(@Valid @RequestBody final MealPlanRequest request) {
 		final var from = LocalDate.parse(request.getFrom());
 		final var to = LocalDate.parse(request.getTo());
-		final var dt = service.plan(from, to);
+		final var dt = service.plan(from, to, request.isCreateMeals());
 		return viewMapper.toView(dt);
 	}
 }

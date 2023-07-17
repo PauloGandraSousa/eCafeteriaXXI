@@ -44,7 +44,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-@Profile("bootstrap")
+@Profile("ecafeteriaxxi.bootstrap")
 public class UserBootstrapper implements CommandLineRunner {
 
 	private final UserRepository userRepo;

@@ -10,7 +10,9 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishReposit
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishTypeRepository;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.MealType;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 
@@ -21,12 +23,14 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
-public class MealPlanningServiceImpl implements MealPlanningService {
+@Profile("ecafeteriaxxi.MealPlanner.Simple")
+public class MealPlanningServiceSimpleImpl implements MealPlanningService {
 
 	private final DishTypeRepository dishTypeRepo;
 	private final DishRepository dishRepo;
 
 	@Override
+	@Transactional
 	public Iterable<Meal> plan(final LocalDate from, final LocalDate to) {
 		final List<Meal> menu = new ArrayList<>();
 

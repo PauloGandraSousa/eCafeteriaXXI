@@ -44,7 +44,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-@Profile("bootstrap")
+@Profile("ecafeteriaxxi.bootstrap")
 public class DishTypeBootstrapper implements CommandLineRunner {
 
 	private final DishTypeRepository repo;
