@@ -1,4 +1,4 @@
-package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
+package org.pagsousa.ecafeteriaxxi.util.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.WebRequest;

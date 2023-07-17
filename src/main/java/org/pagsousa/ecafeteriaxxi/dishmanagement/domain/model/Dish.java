@@ -38,35 +38,6 @@ import eapli.framework.validations.Preconditions;
  * @author Jorge Santos ajs@isep.ipp.pt
  * @author Paulo Gandra de Sousa
  *
- *         <!--
- * @startuml dish.svg
- *
- *           package DishAgregate{
- *
- *           class Dish { Designation name; DishType dishType; NutricionalInfo
- *           nutricionalInfo; Money price; boolean active; Set<AllergenInDish>
- *           allergens; }
- *
- *           NutricionalInfo <-down- Dish Dish o-down- AllergenInDish :
- *           allergens }
- *
- *           package DishTypeAgregate{
- *
- *           class DishType }
- *
- *           DishType <-down- Dish
- *
- *           interface DTOable<DishDTO> { DishDTO toDTO(); }
- *
- *           interface Representationable{ +buildRepresentation() } interface
- *           RepresentationBuilder<R>{ +startObject() +endObject()
- *           +startCollection() +endCollection() +withElement() +withProperty()
- *           } Representationable ..> RepresentationBuilder
- *
- *           Dish .up.|> DTOable Dish .up.|> Representationable
- *
- *           Dish .right.> DishDTO DTOable ..> DishDTO
- * @enduml -->
  */
 @Entity
 @NamedNativeQuery(name = "nativeDishesPerCaloricCategory", query = "SELECT caloricCategory, COUNT(*) as n "

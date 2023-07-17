@@ -20,20 +20,17 @@
  */
 package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
-import java.util.Optional;
-
 import org.mapstruct.Mapper;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
-
-import eapli.framework.general.domain.model.Description;
+import org.pagsousa.ecafeteriaxxi.util.mapping.AbstractViewMapper;
 
 /**
  *
  * @author Paulo Gandra Sousa 06/07/2023.
  */
 @Mapper(componentModel = "spring")
-abstract class DishTypeViewMapper {
+abstract class DishTypeViewMapper implements AbstractViewMapper {
 
 	public abstract DishTypeView toView(DishType dt);
 
@@ -41,13 +38,5 @@ abstract class DishTypeViewMapper {
 
 	public String toView(final DishTypeAcronym acronym) {
 		return acronym.toString();
-	}
-
-	public String toView(final Description desc) {
-		return desc.toString();
-	}
-
-	public String toView(final Optional<Description> maybeDesc) {
-		return maybeDesc.map(Description::toString).orElse(null);
 	}
 }

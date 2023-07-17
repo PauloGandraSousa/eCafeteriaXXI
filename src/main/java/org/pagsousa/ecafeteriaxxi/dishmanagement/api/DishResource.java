@@ -7,6 +7,7 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.application.DishService;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.UpdateDishRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
+import org.pagsousa.ecafeteriaxxi.util.api.AbstractResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

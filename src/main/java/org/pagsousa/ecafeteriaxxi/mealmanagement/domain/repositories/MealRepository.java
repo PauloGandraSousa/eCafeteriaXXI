@@ -18,7 +18,7 @@ public interface MealRepository {
 
 	Iterable<Meal> findByPeriod(LocalDate beginDate, LocalDate endDate);
 
-	Optional<Meal> findById(Long entityId);
+	Optional<Meal> findById(Long mealId);
 
-	Meal save(Meal s);
+	Meal save(Meal meal);
 }

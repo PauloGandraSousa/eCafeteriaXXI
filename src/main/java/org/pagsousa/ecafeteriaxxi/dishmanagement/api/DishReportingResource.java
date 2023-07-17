@@ -3,6 +3,7 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishReportingRepository;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishesPerCaloricCategory;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishesPerDishType;
+import org.pagsousa.ecafeteriaxxi.util.api.AbstractResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
