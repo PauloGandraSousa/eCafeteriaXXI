@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
  * @author Paulo Gandra Sousa 06/07/2023.
  *
  */
-@Tag(name = "Dish management", description = "Endpoints for managing dish types")
+@Tag(name = "Dish type management", description = "Endpoints for managing dish types")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dishtype")
