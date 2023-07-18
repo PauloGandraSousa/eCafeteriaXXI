@@ -1,27 +1,6 @@
-/*
- * Copyright (c) 2022-2022 the original author or authors.
- *
- * MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.ValidationException;
 
@@ -59,7 +38,7 @@ public class UserService implements UserDetailsService {
 			throw new ValidationException("Passwords don't match!");
 		}
 
-		final User user = userEditMapper.create(request);
+		final var user = userEditMapper.create(request);
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
 		return userRepo.save(user);
@@ -67,7 +46,7 @@ public class UserService implements UserDetailsService {
 
 	@Transactional
 	public User update(final Long id, final EditUserRequest request) {
-		final User user = userRepo.getById(id);
+		final var user = userRepo.getById(id);
 		userEditMapper.update(request, user);
 
 		return userRepo.save(user);
@@ -75,22 +54,21 @@ public class UserService implements UserDetailsService {
 
 	@Transactional
 	public User upsert(final CreateUserRequest request) {
-		final Optional<User> optionalUser = userRepo.findByUsername(request.getUsername());
+		final var optionalUser = userRepo.findByUsername(request.getUsername());
 
 		if (optionalUser.isEmpty()) {
 			return create(request);
 		}
-		final EditUserRequest updateUserRequest = new EditUserRequest(request.getFullName(), request.getAuthorities());
+		final var updateUserRequest = new EditUserRequest(request.getFullName(), request.getAuthorities());
 		return update(optionalUser.get().getId(), updateUserRequest);
 	}
 
 	@Transactional
 	public User delete(final Long id) {
-		final User user = userRepo.getById(id);
+		final var user = userRepo.getById(id);
 
-		// user.setUsername(user.getUsername().replace("@", String.format("_%s@",
-		// user.getId().toString())));
-		user.setEnabled(false);
+		user.anonymizeAndDisable();
+
 		return userRepo.save(user);
 	}
 
