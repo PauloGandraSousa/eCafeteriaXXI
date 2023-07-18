@@ -121,11 +121,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/dishtype/**").permitAll() // read-only dish type
 				.antMatchers(HttpMethod.GET, "/api/dish/**").permitAll() // read-only dish
 				.antMatchers(HttpMethod.GET, "/api/reporting/dish/**").permitAll() // read-only dish
+				.antMatchers(HttpMethod.GET, "/api/meal/**").permitAll() // read-only meal
 				// Our private endpoints
 				.antMatchers("/api/admin/user/**").hasRole(Role.USER_ADMIN) // user management
 				.antMatchers("/api/dishtype/**").hasRole(Role.DISH_ADMIN) // dish type management
 				.antMatchers("/api/dish/**").hasRole(Role.DISH_ADMIN) // dish management
-				.antMatchers("/api/mealplan/**").hasRole(Role.MEAL_ADMIN) // dish management
+				.antMatchers("/api/mealplan/**").hasRole(Role.MEAL_ADMIN) // meal management
+				.antMatchers("/api/meal/**").hasRole(Role.MEAL_ADMIN) // meal management
 				.anyRequest().authenticated()
 				// Set up oauth2 resource server
 				.and().httpBasic(Customizer.withDefaults()).oauth2ResourceServer().jwt();

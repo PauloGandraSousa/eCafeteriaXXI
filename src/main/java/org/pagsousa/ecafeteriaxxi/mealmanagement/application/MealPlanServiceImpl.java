@@ -1,9 +1,10 @@
-package org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services;
+package org.pagsousa.ecafeteriaxxi.mealmanagement.application;
 
 import java.time.LocalDate;
 
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.repositories.MealRepository;
+import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services.MealPlanningService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.Valid;
 
-import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services.MealPlanService;
+import org.pagsousa.ecafeteriaxxi.mealmanagement.application.MealPlanService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

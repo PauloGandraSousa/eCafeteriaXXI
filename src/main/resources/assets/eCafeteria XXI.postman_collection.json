@@ -1483,6 +1483,9 @@
 											"pm.test(\"Created\", function(){\r",
 											"\r",
 											"    pm.response.to.have.status(201); \r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.environment.set(\"otherDishUUID\", jsonData.id);\r",
 											"});"
 										],
 										"type": "text/javascript"
@@ -2251,6 +2254,95 @@
 			"name": "Meal management",
 			"item": [
 				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ok\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag);    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal/65",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal",
+										"65"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get by id unexisting",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Not found\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(404);    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal/0",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal",
+										"0"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "private",
 					"item": [
 						{
@@ -2300,6 +2392,249 @@
 									],
 									"path": [
 										"mealplan"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create meal for lunch 2023-07-17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ok\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(201);\r",
+											"\r",
+											"    let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag);\r",
+											"\r",
+											"    let res = pm.response.json();\r",
+											"    pm.environment.set(\"mealID\", res.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ofDay\":\"2023-07-17\",\r\n    \"dish\":\"{{bacalhauUUID}}\",\r\n    \"mealType\":\"LUNCH\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Replace meal for lunch 2023-07-17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ok\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "If-Match",
+										"value": "{{foo1etag}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dish\":\"{{otherDishUUID}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal/{{mealID}}",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal",
+										"{{mealID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Replace meal for lunch 2023-07-17 with extra ignored fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ok\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "If-Match",
+										"value": "{{foo1etag}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ofDay\":\"2023-01-01\",\r\n    \"dish\":\"{{bacalhauUUID}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal/{{mealID}}",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal",
+										"{{mealID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update meal for lunch 2023-07-17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ok\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    let foo1etag = postman.getResponseHeader(\"ETag\");\r",
+											"    pm.environment.set(\"foo1etag\", foo1etag);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "If-Match",
+										"value": "{{foo1etag}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dish\":\"{{otherDishUUID}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal/{{mealID}}",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal",
+										"{{mealID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete meal for lunch 2023-07-17",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ok\", function(){\r",
+											"\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "If-Match",
+										"value": "{{foo1etag}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/meal/{{mealID}}",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"meal",
+										"{{mealID}}"
 									]
 								}
 							},

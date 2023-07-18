@@ -103,6 +103,12 @@ public class Meal implements AggregateRoot<Long> {
 		return dish;
 	}
 
+	public void setDish(final Dish d) {
+		Preconditions.nonNull(d);
+
+		this.dish = d;
+	}
+
 	@Override
 	public Long identity() {
 		return id;
@@ -126,5 +132,9 @@ public class Meal implements AggregateRoot<Long> {
 	@Override
 	public String toString() {
 		return dish + " @ " + day + " / " + mealType;
+	}
+
+	public Long getVersion() {
+		return version;
 	}
 }

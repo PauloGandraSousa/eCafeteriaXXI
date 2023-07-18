@@ -12,6 +12,8 @@ import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.MealType;
  */
 public interface MealRepository {
 
+	Iterable<Meal> findAll();
+
 	Iterable<Meal> findByDayAndType(LocalDate forDay, MealType forMeal);
 
 	Iterable<Meal> findByDay(LocalDate forDay);
@@ -21,4 +23,6 @@ public interface MealRepository {
 	Optional<Meal> findById(Long mealId);
 
 	Meal save(Meal meal);
+
+	int deleteByIdIfMatch(Long parseLong, long expectedVersion);
 }

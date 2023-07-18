@@ -1,4 +1,4 @@
-package org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services;
+package org.pagsousa.ecafeteriaxxi.mealmanagement.application;
 
 import java.time.LocalDate;
 
