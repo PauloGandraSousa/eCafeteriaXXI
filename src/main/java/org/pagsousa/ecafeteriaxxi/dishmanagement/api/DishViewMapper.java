@@ -2,6 +2,7 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
 import org.mapstruct.Mapper;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
+import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.util.mapping.AbstractViewMapper;
 
 /**
@@ -14,4 +15,8 @@ interface DishViewMapper extends AbstractViewMapper {
 	DishView toView(Dish d);
 
 	Iterable<DishView> toView(Iterable<Dish> ds);
+
+	default String map(final DishType dt) {
+		return dt.getAcronym().toString();
+	}
 }

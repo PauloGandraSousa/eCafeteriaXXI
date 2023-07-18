@@ -1,23 +1,3 @@
-/*
- * Copyright (c) 2022-2022 the original author or authors.
- *
- * MIT License
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 package org.pagsousa.ecafeteriaxxi.usermanagement.infrastructure.repositories.impl;
 
 import java.util.ArrayList;
@@ -77,13 +57,15 @@ public interface SpringDataUserRepository extends UserRepository, UserRepoCustom
 	 * @param id
 	 * @return
 	 */
+	@Override
 	@Cacheable
 	default User getById(final Long id) {
-		final Optional<User> maybeUser = findById(id);
+		final var maybeUser = findById(id);
 		// throws 404 Not Found if the user does not exist or is not enabled
 		return maybeUser.filter(User::isEnabled).orElseThrow(() -> new NotFoundException(User.class, id));
 	}
 
+	@Override
 	@Cacheable
 	Optional<User> findByUsername(String username);
 }
@@ -116,7 +98,7 @@ class UserRepoCustomImpl implements UserRepoCustom {
 	@Override
 	public List<User> searchUsers(final Page page, final SearchUsersQuery query) {
 
-		final CriteriaBuilder cb = em.getCriteriaBuilder();
+		final var cb = em.getCriteriaBuilder();
 		final CriteriaQuery<User> cq = cb.createQuery(User.class);
 		final Root<User> root = cq.from(User.class);
 		cq.select(root);

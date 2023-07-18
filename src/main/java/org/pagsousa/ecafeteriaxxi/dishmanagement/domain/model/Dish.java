@@ -31,9 +31,6 @@ import eapli.framework.validations.Preconditions;
 /**
  * A Dish.
  *
- * <p>
- * <img src="dish.svg">
- * </p>
  *
  * @author Jorge Santos ajs@isep.ipp.pt
  * @author Paulo Gandra de Sousa

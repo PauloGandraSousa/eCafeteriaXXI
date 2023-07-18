@@ -19,13 +19,13 @@ import lombok.RequiredArgsConstructor;
  * In order to enable this bootstraping make sure you activate the spring
  * profile "bootstrap" in application.properties
  *
- * @author Paulo Gandra de Sousa
+ * @author Paulo Gandra de Sousa 17/7/2023
  *
  */
 @Component
 @RequiredArgsConstructor
 @Profile("ecafeteriaxxi.bootstrap")
-public class DishTypeBootstrapper implements CommandLineRunner {
+public class DishBootstrapper implements CommandLineRunner {
 
 	private final DishTypeRepository repo;
 
