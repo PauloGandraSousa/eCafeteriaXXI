@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import eapli.framework.domain.model.AggregateRoot;
@@ -24,6 +26,7 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "cafe_name", "unit_name" }) })
 public class Cafeteria implements AggregateRoot<CafeteriaName> {
 
 	private static final long serialVersionUID = -6763256902584926321L;
@@ -35,7 +38,10 @@ public class Cafeteria implements AggregateRoot<CafeteriaName> {
 	@Version
 	private Long version;
 
-	// business identity
+	/**
+	 * business identity. we need to ensure the uniqueness of the cafeteria name,
+	 * hence the unique constraint declared at the top of the class
+	 */
 	private CafeteriaName name;
 
 	@AttributeOverride(name = "name", column = @Column(name = "description", nullable = true, length = 512))

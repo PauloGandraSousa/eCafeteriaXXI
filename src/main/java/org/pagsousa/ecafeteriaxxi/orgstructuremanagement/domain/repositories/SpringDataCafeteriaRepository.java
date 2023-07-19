@@ -4,35 +4,19 @@ import java.util.Optional;
 
 import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
 import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.OrganicUnit;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
 import eapli.framework.general.domain.model.Designation;
 
 /**
- * @author Paulo Gandra Sousa
+ *
+ * @author Paulo Gandra Sousa 19/07/2023.
  *
  */
-public interface CafeteriaRepository {
+public interface SpringDataCafeteriaRepository extends CafeteriaRepository, CrudRepository<Cafeteria, Long> {
 
-	/**
-	 *
-	 * @param cafeName
-	 * @param ou
-	 * @return
-	 */
+	@Override
+	@Query("SELECT e FROM Cafeteria e WHERE e.name.cafe=?1 AND e.organicUnit=?2")
 	Optional<Cafeteria> findByName(Designation cafeName, OrganicUnit ou);
-
-	/**
-	 *
-	 * @param cafe
-	 * @return
-	 */
-	Cafeteria save(Cafeteria cafe);
-
-	/**
-	 * Returns the cafeterias of an organic unit.
-	 *
-	 * @param ou
-	 * @return the cafeterias of an organic unit
-	 */
-	Iterable<Cafeteria> findByOrganicUnit(OrganicUnit ou);
 }
