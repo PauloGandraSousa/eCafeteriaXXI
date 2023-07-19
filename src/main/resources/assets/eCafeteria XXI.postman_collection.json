@@ -367,6 +367,51 @@
 			]
 		},
 		{
+			"name": "Allergens",
+			"item": [
+				{
+					"name": "public",
+					"item": [
+						{
+							"name": "Get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/allergen",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"allergen"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/allergen/crustaceos",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"allergen",
+										"crustaceos"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Dish Type management",
 			"item": [
 				{

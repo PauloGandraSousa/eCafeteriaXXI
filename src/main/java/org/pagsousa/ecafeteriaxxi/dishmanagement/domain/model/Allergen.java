@@ -119,11 +119,11 @@ public class Allergen implements AggregateRoot<String>, Serializable {
 		return !StringPredicates.isNullOrEmpty(name);
 	}
 
-	public String shortName() {
+	public String getShortName() {
 		return shortName;
 	}
 
-	public String fullName() {
+	public String getFullName() {
 		return fullName;
 	}
 
@@ -157,7 +157,7 @@ public class Allergen implements AggregateRoot<String>, Serializable {
 			return false;
 		}
 		final var allergean = (Allergen) other;
-		return this.equals(allergean) && fullName.equals(allergean.fullName());
+		return this.equals(allergean) && fullName.equals(allergean.getFullName());
 	}
 
 	@Override
@@ -173,5 +173,9 @@ public class Allergen implements AggregateRoot<String>, Serializable {
 	@Override
 	public boolean hasIdentity(final String name) {
 		return name.equalsIgnoreCase(shortName);
+	}
+
+	public Long getVersion() {
+		return version;
 	}
 }
