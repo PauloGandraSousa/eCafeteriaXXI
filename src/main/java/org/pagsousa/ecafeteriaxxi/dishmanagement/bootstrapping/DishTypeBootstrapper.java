@@ -5,6 +5,7 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishTypeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 @Profile("ecafeteriaxxi.bootstrap.demo")
+@Order(10)
 public class DishTypeBootstrapper implements CommandLineRunner {
 
 	private final DishTypeRepository repo;

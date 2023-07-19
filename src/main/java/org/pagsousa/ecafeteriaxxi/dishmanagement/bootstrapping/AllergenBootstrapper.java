@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Allergen;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.AllergenRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class AllergenBootstrapper implements CommandLineRunner {
 	private static final Logger LOGGER = LogManager.getLogger(AllergenBootstrapper.class);
 
@@ -32,7 +35,8 @@ public class AllergenBootstrapper implements CommandLineRunner {
 	@Transactional
 	public void run(final String... args) throws Exception {
 		register("gluten",
-				"Cereais que contêm glúten (trigo, centeio, cevada, aveia, espelta, gamut ou outras estirpes hibridizadas) e produtos à base destes cereais");
+				"Cereais que contêm glúten (trigo, centeio, cevada, aveia, espelta, gamut ou outras estirpes hibridizadas) e produtos à base destes cereais",
+				"images/gluten.jpg");
 		register("crustaceos", "Crustáceos e produtos à base de crustáceos");
 		register("ovos", "Ovos e produtos à base de ovos");
 		register("peixes", "Peixes e produtos à base de peixe", "images/sardinha.jpg");
