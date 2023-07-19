@@ -12,10 +12,7 @@
 
 ## Organizational structure
 
-- GET /orgunit
-- GET /orgunit/{acronym}
-- GET /orgunit/{acronym}/cafe
-- GET /orgunit/{acronym}/cafe/{name}
+- n.a.
 
 ## Meal management
 
