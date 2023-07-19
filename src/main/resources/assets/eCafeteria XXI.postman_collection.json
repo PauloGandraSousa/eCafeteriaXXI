@@ -431,6 +431,51 @@
 			]
 		},
 		{
+			"name": "Organizational structure",
+			"item": [
+				{
+					"name": "public",
+					"item": [
+						{
+							"name": "Get all org units",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/orgunit",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"orgunit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get OU by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/orgunit/ISEP",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"orgunit",
+										"ISEP"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Dish Type management",
 			"item": [
 				{

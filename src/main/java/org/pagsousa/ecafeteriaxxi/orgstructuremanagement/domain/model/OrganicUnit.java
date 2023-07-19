@@ -106,4 +106,8 @@ public class OrganicUnit implements AggregateRoot<Designation>, Serializable {
 	public String toString() {
 		return acronym.toString();
 	}
+
+	public Long getVersion() {
+		return version;
+	}
 }

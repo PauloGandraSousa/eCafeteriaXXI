@@ -99,6 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// public endpoints
 				.antMatchers("/api/public/**").permitAll() // public assets & end-points
 				.antMatchers(HttpMethod.GET, "/api/allergen/**").permitAll() //
+				.antMatchers(HttpMethod.GET, "/api/orgunit/**").permitAll() //
 				.antMatchers(HttpMethod.GET, "/api/dishtype/**").permitAll() //
 				.antMatchers(HttpMethod.GET, "/api/dish/**").permitAll() //
 				.antMatchers(HttpMethod.GET, "/api/reporting/dish/**").permitAll() //
