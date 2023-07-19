@@ -406,6 +406,25 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get image",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/allergen/peixes/image",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"allergen",
+										"peixes",
+										"image"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}

@@ -1,13 +1,17 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
+import java.io.IOException;
+
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.AllergenService;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Allergen;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
 import org.pagsousa.ecafeteriaxxi.util.api.AbstractResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,12 +47,21 @@ public class AllergenResource extends AbstractResource {
 	}
 
 	@Operation(summary = "Gets a specific allergen")
-	@GetMapping(value = "/{acronym}")
-	public ResponseEntity<AllergenView> findByAcronym(
-			@PathVariable("acronym") @Parameter(description = "The acronym of the allergen to find") final String acronym) {
-		final var dt = service.findByName(acronym).orElseThrow(() -> new NotFoundException(Allergen.class, acronym));
+	@GetMapping(value = "/{name}")
+	public ResponseEntity<AllergenView> findByName(
+			@PathVariable("name") @Parameter(description = "The name of the allergen to find") final String name) {
+		final var dt = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
 
 		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
 	}
 
+	// TODO actually check the media type of the image to return
+	@Operation(summary = "Gets the image of an allergen")
+	@GetMapping(value = "/{name}/image", produces = MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] getImage(
+			@PathVariable("name") @Parameter(description = "The name of the allergen to find") final String name)
+			throws IOException {
+		final var dt = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
+		return dt.image();
+	}
 }
