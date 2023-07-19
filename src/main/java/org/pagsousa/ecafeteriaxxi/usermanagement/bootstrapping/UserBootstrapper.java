@@ -1,4 +1,4 @@
-package org.pagsousa.ecafeteriaxxi.bootstrapping;
+package org.pagsousa.ecafeteriaxxi.usermanagement.bootstrapping;
 
 import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.Role;
 import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-@Profile("ecafeteriaxxi.bootstrap")
+@Profile("ecafeteriaxxi.bootstrap.demo")
 public class UserBootstrapper implements CommandLineRunner {
 
 	private final UserRepository userRepo;

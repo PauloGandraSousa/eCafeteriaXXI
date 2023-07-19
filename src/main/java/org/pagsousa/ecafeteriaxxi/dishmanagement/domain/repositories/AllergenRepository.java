@@ -27,4 +27,11 @@ public interface AllergenRepository {
 	 * @return
 	 */
 	Optional<Allergen> findByShortName(String name);
+
+	/**
+	 *
+	 * @param newAllergen
+	 * @return
+	 */
+	Allergen save(Allergen newAllergen);
 }

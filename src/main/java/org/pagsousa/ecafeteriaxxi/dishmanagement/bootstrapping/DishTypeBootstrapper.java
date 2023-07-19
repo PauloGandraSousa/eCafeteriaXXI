@@ -1,4 +1,4 @@
-package org.pagsousa.ecafeteriaxxi.bootstrapping;
+package org.pagsousa.ecafeteriaxxi.dishmanagement.bootstrapping;
 
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishTypeAcronym;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-@Profile("ecafeteriaxxi.bootstrap")
+@Profile("ecafeteriaxxi.bootstrap.demo")
 public class DishTypeBootstrapper implements CommandLineRunner {
 
 	private final DishTypeRepository repo;
