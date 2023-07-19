@@ -3,6 +3,7 @@ package org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.repositories;
 import java.util.Optional;
 
 import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
+import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.CafeteriaName;
 import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.OrganicUnit;
 
 import eapli.framework.general.domain.model.Designation;
@@ -23,10 +24,10 @@ public interface CafeteriaRepository {
 
 	/**
 	 *
-	 * @param cafe
+	 * @param valueOf
 	 * @return
 	 */
-	Cafeteria save(Cafeteria cafe);
+	Optional<Cafeteria> findByName(CafeteriaName valueOf);
 
 	/**
 	 * Returns the cafeterias of an organic unit.
@@ -35,4 +36,19 @@ public interface CafeteriaRepository {
 	 * @return the cafeterias of an organic unit
 	 */
 	Iterable<Cafeteria> findByOrganicUnit(OrganicUnit ou);
+
+	/**
+	 * Returns the cafeterias of an organic unit.
+	 *
+	 * @param ou
+	 * @return the cafeterias of an organic unit
+	 */
+	Iterable<Cafeteria> findByOrganicUnit(Designation ouAcronym);
+
+	/**
+	 *
+	 * @param cafe
+	 * @return
+	 */
+	Cafeteria save(Cafeteria cafe);
 }

@@ -90,11 +90,15 @@ public class Cafeteria implements AggregateRoot<CafeteriaName> {
 		this.description = d;
 	}
 
-	public OrganicUnit unit() {
+	public OrganicUnit getUnit() {
 		return organicUnit;
 	}
 
-	public CafeteriaName name() {
+	public CafeteriaName getName() {
 		return name;
+	}
+
+	public Long getVersion() {
+		return version;
 	}
 }

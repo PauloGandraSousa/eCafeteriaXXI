@@ -470,6 +470,45 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get all cafeterias of org unit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/orgunit/ISEP/cafe",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"orgunit",
+										"ISEP",
+										"cafe"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a cafeteria of an org unit",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}{{baseUrl}}/orgunit/ISEP/cafe/Bar F",
+									"host": [
+										"{{host}}{{baseUrl}}"
+									],
+									"path": [
+										"orgunit",
+										"ISEP",
+										"cafe",
+										"Bar F"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}

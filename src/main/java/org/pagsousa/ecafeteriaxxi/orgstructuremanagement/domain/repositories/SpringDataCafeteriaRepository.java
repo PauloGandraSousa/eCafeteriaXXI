@@ -19,4 +19,8 @@ public interface SpringDataCafeteriaRepository extends CafeteriaRepository, Crud
 	@Override
 	@Query("SELECT e FROM Cafeteria e WHERE e.name.cafe=?1 AND e.organicUnit=?2")
 	Optional<Cafeteria> findByName(Designation cafeName, OrganicUnit ou);
+
+	@Override
+	@Query("SELECT e FROM Cafeteria e WHERE e.organicUnit.acronym=?1")
+	Iterable<Cafeteria> findByOrganicUnit(Designation ouAcronym);
 }

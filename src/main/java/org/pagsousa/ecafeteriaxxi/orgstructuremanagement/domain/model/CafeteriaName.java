@@ -64,6 +64,10 @@ public class CafeteriaName implements ValueObject, Comparable<CafeteriaName> {
 		return new CafeteriaName(Designation.valueOf(tokens[0]), Designation.valueOf(tokens[1]));
 	}
 
+	public static CafeteriaName valueOf(final String ouAcronym, final String cafeName) {
+		return new CafeteriaName(Designation.valueOf(ouAcronym), Designation.valueOf(cafeName));
+	}
+
 	@Override
 	public String toString() {
 		return unit() + "/" + cafe();
