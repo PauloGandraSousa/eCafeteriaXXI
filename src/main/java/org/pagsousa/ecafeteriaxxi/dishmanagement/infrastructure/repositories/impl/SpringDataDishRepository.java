@@ -38,4 +38,8 @@ public interface SpringDataDishRepository extends DishRepository, SpringDataBase
 	@Modifying
 	@Query("DELETE FROM Dish f WHERE f.id = ?1 AND f.version = ?2")
 	int deleteByIdIfMatch(UUID id, long desiredVersion);
+
+	@Override
+	@Query(value = "SELECT * FROM DISH e WHERE e.name LIKE %?1% ORDER BY e.name ASC", nativeQuery = true)
+	Iterable<Dish> searchByName(String dsg);
 }

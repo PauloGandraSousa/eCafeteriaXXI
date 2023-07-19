@@ -61,4 +61,11 @@ public interface DishRepository {
 	 * @return
 	 */
 	Iterable<Dish> findAllByDishType(DishType dt);
+
+	/**
+	 *
+	 * @param dsg
+	 * @return
+	 */
+	Iterable<Dish> searchByName(String dsg);
 }

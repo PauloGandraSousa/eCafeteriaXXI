@@ -40,25 +40,26 @@ public class DishBootstrapper implements CommandLineRunner {
 		final var peixe = dishTypeRepo.findByAcronym(DishTypeAcronym.valueOf("peixe")).orElseThrow();
 		final var carne = dishTypeRepo.findByAcronym(DishTypeAcronym.valueOf("carne")).orElseThrow();
 
-		var d = createDish("Bacalhau à Bráz", "Receita que não sabemos bem qual o nome mas é deliciosa.", peixe,
+		createDish("Bacalhau à Bráz", "Receita que não sabemos bem qual o nome mas é deliciosa.", peixe,
 				Money.euros(3.99));
-		dishRepo.save(d);
-
-		d = createDish("Bacalhau à Zé do Pipo", "Receita que não sabemos bem qual o nome mas é deliciosa.", peixe,
+		createDish("Bacalhau à Zé do Pipo", "Receita que não sabemos bem qual o nome mas é deliciosa.", peixe,
 				Money.euros(4.99));
-		dishRepo.save(d);
-
-		d = createDish("Costeleta à salsicheiro", "Receita que não sabemos bem qual o nome mas é deliciosa.", carne,
+		createDish("Costeleta à salsicheiro", "Receita que não sabemos bem qual o nome mas é deliciosa.", carne,
 				Money.euros(2.99));
-		dishRepo.save(d);
-
-		d = createDish("Picanha", "Receita que não sabemos bem qual o nome mas é deliciosa.", carne, Money.euros(5.99));
-		dishRepo.save(d);
+		createDish("Picanha", "Receita que não sabemos bem qual o nome mas é deliciosa.", carne, Money.euros(5.99));
 	}
 
 	private Dish createDish(final String dsg, final String desc, final DishType type, final Money price) {
+		// check if we already have a dish with this name
+		final var ds = dishRepo.searchByName(dsg);
+		if (ds.iterator().hasNext()) {
+			return ds.iterator().next();
+		}
+
+		// create a new one if not
 		final var theDsg = Designation.valueOf(dsg);
 		final var theDesc = Description.valueOf(desc);
-		return new Dish(type, theDsg, price, theDesc);
+		final var d = new Dish(type, theDsg, price, theDesc);
+		return dishRepo.save(d);
 	}
 }
