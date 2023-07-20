@@ -50,9 +50,8 @@ public class AllergenResource extends AbstractResource {
 	@GetMapping(value = "/{name}")
 	public ResponseEntity<AllergenView> findByName(
 			@PathVariable("name") @Parameter(description = "The name of the allergen to find") final String name) {
-		final var dt = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
-
-		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
+		final var allergen = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
+		return ResponseEntity.ok().eTag(Long.toString(allergen.getVersion())).body(viewMapper.toView(allergen));
 	}
 
 	// TODO actually check the media type of the image to return
@@ -61,7 +60,7 @@ public class AllergenResource extends AbstractResource {
 	public @ResponseBody byte[] getImage(
 			@PathVariable("name") @Parameter(description = "The name of the allergen to find") final String name)
 			throws IOException {
-		final var dt = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
-		return dt.image();
+		final var allergen = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
+		return allergen.image();
 	}
 }

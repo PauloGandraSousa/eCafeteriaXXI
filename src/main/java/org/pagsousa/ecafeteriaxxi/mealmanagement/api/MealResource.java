@@ -58,17 +58,17 @@ public class MealResource extends AbstractResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<MealView> findById(
 			@PathVariable("id") @Parameter(description = "The id of the meal to find") final String id) {
-		final var d = service.findById(id).orElseThrow(() -> new NotFoundException(DishType.class, id));
-		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		final var meal = service.findById(id).orElseThrow(() -> new NotFoundException(DishType.class, id));
+		return ResponseEntity.ok().eTag(Long.toString(meal.getVersion())).body(viewMapper.toView(meal));
 	}
 
 	@Operation(summary = "Creates a new meal")
 	@PostMapping
 	public ResponseEntity<MealView> create(@Valid @RequestBody final CreateMealRequest request) {
-		final var d = service.create(request);
-		final var uri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(d.identity().toString()).build()
+		final var meal = service.create(request);
+		final var newUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(meal.identity().toString()).build()
 				.toUri();
-		return ResponseEntity.created(uri).eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		return ResponseEntity.created(newUri).eTag(Long.toString(meal.getVersion())).body(viewMapper.toView(meal));
 	}
 
 	@Operation(summary = "Fully replaces an existing meal.")
@@ -77,8 +77,8 @@ public class MealResource extends AbstractResource {
 			@PathVariable("id") @Parameter(description = "The id of the meal to replace") final String id,
 			@Valid @RequestBody final ReplaceMealRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var d = service.replace(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		final var meal = service.replace(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(meal.getVersion())).body(viewMapper.toView(meal));
 	}
 
 	@Operation(summary = "Partially updates an existing meal")
@@ -87,8 +87,8 @@ public class MealResource extends AbstractResource {
 			@PathVariable("id") @Parameter(description = "The id of the meal to update") final String id,
 			@Valid @RequestBody final UpdateMealRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var d = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		final var meal = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(meal.getVersion())).body(viewMapper.toView(meal));
 	}
 
 	@Operation(summary = "Deletes an existing meal")

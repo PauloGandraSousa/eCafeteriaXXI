@@ -57,18 +57,17 @@ public class DishResource extends AbstractResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<DishView> findByUUID(
 			@PathVariable("id") @Parameter(description = "The id of the dish to find") final String id) {
-		final var d = service.findById(id).orElseThrow(() -> new NotFoundException(DishType.class, id));
-
-		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		final var dish = service.findById(id).orElseThrow(() -> new NotFoundException(DishType.class, id));
+		return ResponseEntity.ok().eTag(Long.toString(dish.getVersion())).body(viewMapper.toView(dish));
 	}
 
 	@Operation(summary = "Creates a new dish")
 	@PostMapping
 	public ResponseEntity<DishView> create(@Valid @RequestBody final CreateOrReplaceDishRequest resource) {
-		final var d = service.create(resource);
-		final var dishUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(d.identity().toString())
+		final var dish = service.create(resource);
+		final var newUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(dish.identity().toString())
 				.build().toUri();
-		return ResponseEntity.created(dishUri).eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		return ResponseEntity.created(newUri).eTag(Long.toString(dish.getVersion())).body(viewMapper.toView(dish));
 	}
 
 	@Operation(summary = "Fully replaces an existing dish.")
@@ -77,8 +76,8 @@ public class DishResource extends AbstractResource {
 			@PathVariable("id") @Parameter(description = "The id of the dish to replace") final String id,
 			@Valid @RequestBody final CreateOrReplaceDishRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var d = service.replace(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		final var dish = service.replace(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(dish.getVersion())).body(viewMapper.toView(dish));
 	}
 
 	@Operation(summary = "Partially updates an existing dish")
@@ -87,8 +86,8 @@ public class DishResource extends AbstractResource {
 			@PathVariable("id") @Parameter(description = "The id of the dish to update") final String id,
 			@Valid @RequestBody final UpdateDishRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var d = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(d.getVersion())).body(viewMapper.toView(d));
+		final var dish = service.update(id, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(dish.getVersion())).body(viewMapper.toView(dish));
 	}
 
 	@Operation(summary = "Deletes an existing dish")
@@ -107,7 +106,7 @@ public class DishResource extends AbstractResource {
 			@PathVariable("id") @Parameter(description = "The id of the dish to update") final String id,
 			@Valid @RequestBody final EmptyRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var dt = service.toogleState(id, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
+		final var dish = service.toogleState(id, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(dish.getVersion())).body(viewMapper.toView(dish));
 	}
 }

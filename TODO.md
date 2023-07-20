@@ -21,7 +21,7 @@
 ## Cafeteria Users ("utentes")
 
 - register
-- aprove registration
+- approve registration
 
 ## Booking
 

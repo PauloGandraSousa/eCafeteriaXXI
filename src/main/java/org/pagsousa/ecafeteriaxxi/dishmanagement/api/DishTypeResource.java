@@ -59,9 +59,8 @@ public class DishTypeResource extends AbstractResource {
 	@GetMapping(value = "/{acronym}")
 	public ResponseEntity<DishTypeView> findByAcronym(
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to find") final String acronym) {
-		final var dt = service.findByAcronym(acronym).orElseThrow(() -> new NotFoundException(DishType.class, acronym));
-
-		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
+		final var dishType = service.findByAcronym(acronym).orElseThrow(() -> new NotFoundException(DishType.class, acronym));
+		return ResponseEntity.ok().eTag(Long.toString(dishType.getVersion())).body(viewMapper.toView(dishType));
 	}
 
 	/**
@@ -82,9 +81,9 @@ public class DishTypeResource extends AbstractResource {
 		final var ifMatchValue = request.getHeader("If-Match");
 		if (ifMatchValue == null || ifMatchValue.isEmpty()) {
 			// no if-match header was sent, so we are in INSERT mode
-			final var dt = service.create(acronym, resource);
-			final var newFooUri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
-			return ResponseEntity.created(newFooUri).eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
+			final var dishType = service.create(acronym, resource);
+			final var newUri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
+			return ResponseEntity.created(newUri).eTag(Long.toString(dishType.getVersion())).body(viewMapper.toView(dishType));
 		}
 		// if-match header was sent, so we are in UPDATE mode
 		final var dt = service.replace(acronym, resource, getVersionFromIfMatchHeader(ifMatchValue));
@@ -97,8 +96,8 @@ public class DishTypeResource extends AbstractResource {
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to update") final String acronym,
 			@Valid @RequestBody final UpdateDishTypeRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var foo = service.update(acronym, resource, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(foo.getVersion())).body(viewMapper.toView(foo));
+		final var dishType = service.update(acronym, resource, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(dishType.getVersion())).body(viewMapper.toView(dishType));
 	}
 
 	@Operation(summary = "Deletes an existing dish type")
@@ -117,7 +116,7 @@ public class DishTypeResource extends AbstractResource {
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to update") final String acronym,
 			@Valid @RequestBody final EmptyRequest resource) {
 		final var ifMatchValue = ensureIfMatchHeader(request);
-		final var dt = service.toogleState(acronym, getVersionFromIfMatchHeader(ifMatchValue));
-		return ResponseEntity.ok().eTag(Long.toString(dt.getVersion())).body(viewMapper.toView(dt));
+		final var dishType = service.toogleState(acronym, getVersionFromIfMatchHeader(ifMatchValue));
+		return ResponseEntity.ok().eTag(Long.toString(dishType.getVersion())).body(viewMapper.toView(dishType));
 	}
 }

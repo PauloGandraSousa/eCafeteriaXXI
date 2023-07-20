@@ -33,7 +33,7 @@ public class MealPlanResource {
 	public Iterable<MealView> plan(@Valid @RequestBody final MealPlanRequest request) {
 		final var from = LocalDate.parse(request.getFrom());
 		final var to = LocalDate.parse(request.getTo());
-		final var dt = service.plan(from, to, request.isCreateMeals());
-		return viewMapper.toView(dt);
+		final var menu = service.plan(from, to, request.isCreateMeals());
+		return viewMapper.toView(menu);
 	}
 }
