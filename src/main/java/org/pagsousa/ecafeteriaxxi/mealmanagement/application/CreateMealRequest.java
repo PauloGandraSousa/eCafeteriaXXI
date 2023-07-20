@@ -19,10 +19,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateMealRequest {
 
-	@Schema(required = true, description = "The id of the dish")
 	@NotNull
 	@NotBlank
-	private String dish;
+	private String mealType;
 
 	@NotNull
 	@NotBlank
@@ -30,5 +29,10 @@ public class CreateMealRequest {
 
 	@NotNull
 	@NotBlank
-	private String mealType;
+	private String cafeteriaName;
+
+	@Schema(required = true, description = "The id of the dish")
+	@NotNull
+	@NotBlank
+	private String dish;
 }

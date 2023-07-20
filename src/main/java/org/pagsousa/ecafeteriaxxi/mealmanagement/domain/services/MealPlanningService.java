@@ -3,6 +3,7 @@ package org.pagsousa.ecafeteriaxxi.mealmanagement.domain.services;
 import java.time.LocalDate;
 
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
+import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
 
 /**
  * The planning strategy/algorithm.
@@ -12,5 +13,5 @@ import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
  */
 public interface MealPlanningService {
 
-	Iterable<Meal> plan(LocalDate from, LocalDate to);
+	Iterable<Meal> plan(Cafeteria cafe, LocalDate from, LocalDate to);
 }

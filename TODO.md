@@ -16,7 +16,7 @@
 
 ## Meal management
 
-- specify to which cafeteria the meal is for
+- n.a.
 
 ## Cafeteria Users ("utentes")
 

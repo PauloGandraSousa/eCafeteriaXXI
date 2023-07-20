@@ -3,6 +3,7 @@ package org.pagsousa.ecafeteriaxxi.mealmanagement.api;
 import org.mapstruct.Mapper;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
+import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
 import org.pagsousa.ecafeteriaxxi.util.mapping.AbstractViewMapper;
 
 /**
@@ -20,4 +21,7 @@ interface MealViewMapper extends AbstractViewMapper {
 		return dt.getAcronym().toString();
 	}
 
+	default String map(final Cafeteria s) {
+		return s.getName().toString();
+	}
 }

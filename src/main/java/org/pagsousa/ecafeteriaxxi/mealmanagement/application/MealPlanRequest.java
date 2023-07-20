@@ -1,4 +1,4 @@
-package org.pagsousa.ecafeteriaxxi.mealmanagement.api;
+package org.pagsousa.ecafeteriaxxi.mealmanagement.application;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +21,10 @@ public class MealPlanRequest {
 	@NotNull
 	@NotBlank
 	private String to;
+
+	@NotNull
+	@NotBlank
+	private String cafeteriaName;
 
 	@Schema(description = "'false' = does not save the planned meals. The client can use the result of this operation as a suggestion and afterwards create each meal.")
 	private boolean createMeals;

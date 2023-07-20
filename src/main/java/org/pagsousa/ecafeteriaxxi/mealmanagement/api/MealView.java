@@ -14,10 +14,8 @@ import lombok.Data;
 @Schema(description = "A meal")
 public class MealView {
 	private String id;
-
-	private String day;
-
 	private String mealType;
-
+	private String day;
+	private String cafeteria;
 	private DishView dish;
 }

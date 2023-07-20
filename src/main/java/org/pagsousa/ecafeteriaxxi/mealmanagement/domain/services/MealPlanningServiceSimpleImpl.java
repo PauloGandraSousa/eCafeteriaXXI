@@ -10,6 +10,7 @@ import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishReposit
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishTypeRepository;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.MealType;
+import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,25 +32,26 @@ public class MealPlanningServiceSimpleImpl implements MealPlanningService {
 
 	@Override
 	@Transactional
-	public Iterable<Meal> plan(final LocalDate from, final LocalDate to) {
+	public Iterable<Meal> plan(final Cafeteria cafe, final LocalDate from, final LocalDate to) {
 		final List<Meal> menu = new ArrayList<>();
 
 		var theDay = from;
 		while (theDay.compareTo(to) <= 0) {
-			generateForADay(menu, theDay, MealType.LUNCH);
-			generateForADay(menu, theDay, MealType.DINNER);
+			generateForADay(menu, cafe, theDay, MealType.LUNCH);
+			generateForADay(menu, cafe, theDay, MealType.DINNER);
 			theDay = theDay.plusDays(1);
 		}
 
 		return menu;
 	}
 
-	private void generateForADay(final List<Meal> menu, final LocalDate theDay, final MealType type) {
+	private void generateForADay(final List<Meal> menu, final Cafeteria cafe, final LocalDate theDay,
+			final MealType type) {
 		final var dts = dishTypeRepo.findAllActive();
 		for (final DishType dt : dts) {
 			final var ds = dishRepo.findAllByDishType(dt);
 			for (final Dish d : ds) {
-				final var m = new Meal(type, theDay, d);
+				final var m = new Meal(type, theDay, cafe, d);
 				menu.add(m);
 				// just choose the first dish of this type
 				break;

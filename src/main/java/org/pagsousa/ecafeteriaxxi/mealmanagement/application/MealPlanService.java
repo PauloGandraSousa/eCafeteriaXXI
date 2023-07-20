@@ -1,7 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.mealmanagement.application;
 
-import java.time.LocalDate;
-
 import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
 
 /**
@@ -11,5 +9,5 @@ import org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model.Meal;
  */
 public interface MealPlanService {
 
-	Iterable<Meal> plan(LocalDate from, LocalDate to, boolean createMeals);
+	Iterable<Meal> plan(MealPlanRequest request);
 }

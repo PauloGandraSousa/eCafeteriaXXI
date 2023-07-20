@@ -18,7 +18,7 @@ interface CafeteriaViewMapper extends AbstractViewMapper {
 	Iterable<CafeteriaView> toView(Iterable<Cafeteria> dts);
 
 	default String map(final CafeteriaName s) {
-		return s.cafe().toString();
+		return s.toString();
 	}
 
 	default String map(final OrganicUnit ou) {

@@ -1,9 +1,8 @@
 package org.pagsousa.ecafeteriaxxi.mealmanagement.api;
 
-import java.time.LocalDate;
-
 import javax.validation.Valid;
 
+import org.pagsousa.ecafeteriaxxi.mealmanagement.application.MealPlanRequest;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.application.MealPlanService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,9 +30,7 @@ public class MealPlanResource {
 	@Operation(summary = "Generates the menu for a certain period.", description = "Generates a meal plan for a certain period")
 	@PostMapping
 	public Iterable<MealView> plan(@Valid @RequestBody final MealPlanRequest request) {
-		final var from = LocalDate.parse(request.getFrom());
-		final var to = LocalDate.parse(request.getTo());
-		final var menu = service.plan(from, to, request.isCreateMeals());
+		final var menu = service.plan(request);
 		return viewMapper.toView(menu);
 	}
 }

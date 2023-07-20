@@ -2500,7 +2500,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"from\": \"2023-07-11\",\r\n    \"to\": \"2023-07-11\"\r\n}",
+									"raw": "{\r\n    \"from\": \"2023-07-11\",\r\n    \"to\": \"2023-07-11\",\r\n    \"cafeteriaName\":\"ISEP/cantina\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2526,7 +2526,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"from\": \"2023-07-11\",\r\n    \"to\": \"2023-07-11\",\r\n    \"createMeals\": true\r\n}",
+									"raw": "{\r\n    \"from\": \"2023-07-11\",\r\n    \"to\": \"2023-07-11\",\r\n    \"cafeteriaName\":\"ISEP/cantina\",\r\n    \"createMeals\": true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2572,7 +2572,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"ofDay\":\"2023-07-17\",\r\n    \"dish\":\"{{bacalhauUUID}}\",\r\n    \"mealType\":\"LUNCH\"\r\n}",
+									"raw": "{\r\n    \"ofDay\":\"2023-07-17\",\r\n    \"dish\":\"{{bacalhauUUID}}\",\r\n    \"mealType\":\"LUNCH\",\r\n    \"cafeteriaName\":\"ISEP/cantina\"\r\n    }",
 									"options": {
 										"raw": {
 											"language": "json"

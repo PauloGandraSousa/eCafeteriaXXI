@@ -9,10 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
+import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
@@ -25,7 +25,6 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Entity
-@Table(name = "MEAL")
 public class Meal implements AggregateRoot<Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -37,8 +36,7 @@ public class Meal implements AggregateRoot<Long> {
 	 * avoided. However, in scenarios where an opaque Identifier is needed it is one
 	 * possible solution.
 	 * <p>
-	 * See also the use of UUID as an opaque identity for
-	 * {@link eapli.ecafeteria.mealbooking.domain.Booking Booking}
+	 * See also the use of UUID as an opaque identity
 	 */
 	@Id
 	@GeneratedValue
@@ -56,6 +54,9 @@ public class Meal implements AggregateRoot<Long> {
 	private LocalDate day;
 
 	@ManyToOne(optional = false)
+	private Cafeteria cafeteria;
+
+	@ManyToOne(optional = false)
 	private Dish dish;
 
 	protected Meal() {
@@ -69,11 +70,12 @@ public class Meal implements AggregateRoot<Long> {
 	 * @param dish
 	 * @param theMenu
 	 */
-	public Meal(final MealType mealType, final LocalDate ofDay, final Dish dish) {
-		Preconditions.noneNull(mealType, ofDay, dish);
+	public Meal(final MealType mealType, final LocalDate ofDay, final Cafeteria cafeteria, final Dish dish) {
+		Preconditions.noneNull(mealType, ofDay, cafeteria, dish);
 
 		this.mealType = mealType;
 		day = ofDay;
+		this.cafeteria = cafeteria;
 		this.dish = dish;
 	}
 
@@ -97,6 +99,10 @@ public class Meal implements AggregateRoot<Long> {
 
 	public LocalDate getDay() {
 		return day;
+	}
+
+	public Cafeteria getCafeteria() {
+		return cafeteria;
 	}
 
 	public Dish getDish() {
@@ -126,7 +132,7 @@ public class Meal implements AggregateRoot<Long> {
 		}
 
 		return identity().equals(that.identity()) && day.equals(that.day) && dish.sameAs(that.dish)
-				&& mealType.equals(that.mealType);
+				&& mealType.equals(that.mealType) && this.cafeteria.equals(that.cafeteria);
 	}
 
 	@Override
