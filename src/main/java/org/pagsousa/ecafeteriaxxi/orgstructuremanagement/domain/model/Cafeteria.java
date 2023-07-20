@@ -63,8 +63,17 @@ public class Cafeteria implements AggregateRoot<CafeteriaName> {
 
 	@Override
 	public boolean sameAs(final Object other) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!(other instanceof Cafeteria)) {
+			return false;
+		}
+
+		final var that = (Cafeteria) other;
+		if (this == that) {
+			return true;
+		}
+
+		return identity().equals(that.identity()) && name.equals(that.name)
+				&& description.equals(that.description) && this.organicUnit.equals(that.organicUnit);
 	}
 
 	@Override

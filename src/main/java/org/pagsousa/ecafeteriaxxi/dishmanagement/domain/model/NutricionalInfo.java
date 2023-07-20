@@ -1,7 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Embeddable;
 
 import eapli.framework.domain.model.ValueObject;
@@ -29,7 +27,7 @@ import lombok.experimental.Accessors;
 @Embeddable
 @Value
 @Accessors(fluent = true)
-public class NutricionalInfo implements ValueObject, Serializable {
+public class NutricionalInfo implements ValueObject {
 
 	private static final long serialVersionUID = 1L;
 

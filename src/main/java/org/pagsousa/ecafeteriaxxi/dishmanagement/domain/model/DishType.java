@@ -1,6 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 import javax.persistence.AttributeOverride;
@@ -24,7 +23,7 @@ import eapli.framework.validations.Preconditions;
  * @author MCN 29/03/2016.
  */
 @Entity
-public class DishType implements AggregateRoot<DishTypeAcronym>, Serializable {
+public class DishType implements AggregateRoot<DishTypeAcronym> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 import javax.persistence.AttributeOverride;
@@ -24,7 +23,7 @@ import eapli.framework.validations.Preconditions;
  * @author Paulo Gandra Sousa
  */
 @Entity
-public class OrganicUnit implements AggregateRoot<Designation>, Serializable {
+public class OrganicUnit implements AggregateRoot<Designation> {
 
 	private static final long serialVersionUID = 1L;
 

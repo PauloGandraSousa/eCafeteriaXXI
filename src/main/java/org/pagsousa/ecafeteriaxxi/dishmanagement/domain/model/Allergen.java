@@ -1,6 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.persistence.Column;
@@ -29,7 +28,7 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Entity
-public class Allergen implements AggregateRoot<String>, Serializable {
+public class Allergen implements AggregateRoot<String> {
 
 	private static final long serialVersionUID = 1L;
 
