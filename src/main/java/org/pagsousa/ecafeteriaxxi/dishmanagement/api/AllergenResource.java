@@ -54,13 +54,12 @@ public class AllergenResource extends AbstractResource {
 		return ResponseEntity.ok().eTag(Long.toString(allergen.getVersion())).body(viewMapper.toView(allergen));
 	}
 
-	// TODO actually check the media type of the image to return
 	@Operation(summary = "Gets the image of an allergen")
 	@GetMapping(value = "/{name}/image", produces = MediaType.IMAGE_JPEG_VALUE)
 	public @ResponseBody byte[] getImage(
-			@PathVariable("name") @Parameter(description = "The name of the allergen to find") final String name)
-			throws IOException {
+			@PathVariable("name") @Parameter(description = "The name of the allergen to find") final String name) {
 		final var allergen = service.findByName(name).orElseThrow(() -> new NotFoundException(Allergen.class, name));
+		// TODO actually check the media type of the image to return and set the appropriate content-type header
 		return allergen.image();
 	}
 }

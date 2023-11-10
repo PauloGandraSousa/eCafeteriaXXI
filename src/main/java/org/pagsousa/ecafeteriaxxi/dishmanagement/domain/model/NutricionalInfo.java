@@ -48,8 +48,8 @@ public class NutricionalInfo implements ValueObject {
 	 * @param salt
 	 */
 	public NutricionalInfo(final int caloriesInKCalPer100, final int saltInGPer100) {
-		Preconditions.ensure(caloriesInKCalPer100 >= 0, "Calories can't be negative");
-		Preconditions.ensure(saltInGPer100 >= 0, "Salt can't be negative");
+		Preconditions.ensure(caloriesInKCalPer100 >= 0, "Calories must be positive or zero");
+		Preconditions.ensure(saltInGPer100 >= 0, "Salt must be positive or zero");
 
 		this.caloriesInKCalPer100 = caloriesInKCalPer100;
 		this.saltInGPer100 = saltInGPer100;
@@ -65,6 +65,6 @@ public class NutricionalInfo implements ValueObject {
 
 	@Override
 	public String toString() {
-		return caloriesInKCalPer100 + " " + saltInGPer100;
+		return "(" + caloriesInKCalPer100 + " kcal/100, " + saltInGPer100 + " g/100)";
 	}
 }

@@ -8,7 +8,7 @@
 
 - when creating/updating a dish include the nutricional info
 - allergen
-	- check media type of image to return
+  - check media type of image to return
 
 ## Organizational structure
 
