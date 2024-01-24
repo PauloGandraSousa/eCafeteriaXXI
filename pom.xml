@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.13</version>
+		<version>2.7.18</version>
 	</parent>
 	<groupId>org.pagsousa</groupId>
 	<artifactId>ecafeteriaxxi</artifactId>
@@ -20,7 +20,7 @@
 		<downloadSources>true</downloadSources>
 		<downloadJavadocs>true</downloadJavadocs>
 		<!-- version property for release from Jitpack.io -->
-		<eapli.framework.core.version>v22.2.0_RELEASE</eapli.framework.core.version>
+		<eapli.framework.core.version>v22.3.0_RELEASE</eapli.framework.core.version>
 		<!-- version property for local nexus repository for development -->
 		<eapli.framework.core.version-snapshot>22.0.0</eapli.framework.core.version-snapshot>
 	</properties>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.4</version>
+			<version>1.7.0</version>
 		</dependency>
 		<!-- validation of requests -->
 		<dependency>
