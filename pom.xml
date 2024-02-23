@@ -26,9 +26,9 @@
 		<downloadJavadocs>true</downloadJavadocs>
 
 		<!-- version property for release from Jitpack.io -->
-		<eapli.framework.core.version>v22.3.0_RELEASE</eapli.framework.core.version>
+		<eapli.framework.core.version>v23.0.0_RELEASE</eapli.framework.core.version>
 		<!-- version property for local nexus repository for development -->
-		<eapli.framework.core.version-snapshot>22.0.0</eapli.framework.core.version-snapshot>
+		<eapli.framework.core.version-snapshot>23.0.0</eapli.framework.core.version-snapshot>
 	</properties>
 	<dependencies>
 		<!-- EAPLI framework -->
