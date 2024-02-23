@@ -86,8 +86,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 			final IllegalArgumentException ex) {
 		logger.error("BadRequestException {}\n", request.getRequestURI(), ex);
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new ApiCallError<>("Bad Request", List.of(ex.getMessage())));
+		final var message = ex.getMessage() != null ? ex.getMessage() : "Bad Request";
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiCallError<>("Bad Request", List.of(message)));
 	}
 
 	@ExceptionHandler(NotFoundException.class)
