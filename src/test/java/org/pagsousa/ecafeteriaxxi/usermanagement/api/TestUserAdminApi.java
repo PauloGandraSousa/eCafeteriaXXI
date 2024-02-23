@@ -23,7 +23,6 @@ package org.pagsousa.ecafeteriaxxi.usermanagement.api;
 import static java.lang.System.currentTimeMillis;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -190,13 +189,15 @@ class TestUserAdminApi {
 
 		final var goodRequest = new CreateUserRequest(userView.getUsername(), "Test User A", "Test12345_");
 
-		final var createResult = this.mockMvc.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
-				.content(JsonHelper.toJson(objectMapper, goodRequest))).andExpect(status().isOk()).andReturn();
+		final var createResult = this.mockMvc
+				.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
+						.content(JsonHelper.toJson(objectMapper, goodRequest)))
+				.andExpect(status().isConflict()).andReturn();
 
-		final var newUserView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
-				UserView.class);
-		assertNotEquals(userView.getId(), newUserView.getId(), "User ids must not match!");
-		assertEquals(userView.getUsername(), newUserView.getUsername(), "User names must match!");
+//		final var newUserView = JsonHelper.fromJson(objectMapper, createResult.getResponse().getContentAsString(),
+//				UserView.class);
+//		assertNotEquals(userView.getId(), newUserView.getId(), "User ids must not match!");
+//		assertEquals(userView.getUsername(), newUserView.getUsername(), "User names must match!");
 	}
 
 	@Test

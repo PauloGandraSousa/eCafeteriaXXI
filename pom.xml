@@ -12,13 +12,19 @@
 	<name>eCafeteriaXXI</name>
 	<description>REST API for eCafeteria XXI</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
+
+		<spring-security.version>5.8.9</spring-security.version>
+		
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
 		<sonar.exclusions>src/main/java/**/*/package-info.java</sonar.exclusions>
+
 		<downloadSources>true</downloadSources>
 		<downloadJavadocs>true</downloadJavadocs>
+
 		<!-- version property for release from Jitpack.io -->
 		<eapli.framework.core.version>v22.3.0_RELEASE</eapli.framework.core.version>
 		<!-- version property for local nexus repository for development -->
@@ -111,13 +117,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>17</source>
+					<target>17</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-							<version>1.18.26</version>
+							<version>1.18.30</version>
 						</path>
 						<!-- Mapper library to automate model transformations DTO: <-> Model -->
 						<path>

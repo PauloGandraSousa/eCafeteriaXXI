@@ -169,7 +169,7 @@ public class User implements UserDetails {
 	}
 
 	public void anonymizeAndDisable() {
-		username = UUID.randomUUID().toString();
+		username = UUID.randomUUID().toString() + "@acme.com";
 		setFullName("Anonymous Smith");
 		setPassword("blank");
 		this.setEnabled(false);

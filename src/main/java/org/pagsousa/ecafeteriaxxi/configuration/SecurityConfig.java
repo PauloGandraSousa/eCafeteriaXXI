@@ -12,13 +12,14 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -53,10 +55,10 @@ import lombok.RequiredArgsConstructor;
  *
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @EnableConfigurationProperties
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
 	private final UserRepository userRepo;
 
@@ -72,14 +74,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${springdoc.swagger-ui.path}")
 	private String swaggerPath;
 
-	@Override
-	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(username -> userRepo.findByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException(format("User: %s, not found", username))));
+	@Bean
+	public AuthenticationManager authenticationManager(final UserDetailsService userDetailsService,
+			final PasswordEncoder passwordEncoder) {
+		final var authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailsService);
+		authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+		return new ProviderManager(authenticationProvider);
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return username -> userRepo.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException(format("User: %s, not found", username)));
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Enable CORS and disable CSRF
 		http = http.cors().and().csrf().disable();
 
@@ -92,27 +104,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						.accessDeniedHandler(new BearerTokenAccessDeniedHandler()));
 
 		// Set permissions on endpoints
-		http.authorizeRequests()
+		http.authorizeHttpRequests()
 				// Swagger endpoints must be publicly accessible
-				.antMatchers("/").permitAll().antMatchers(format("%s/**", restApiDocPath)).permitAll()
-				.antMatchers(format("%s/**", swaggerPath)).permitAll()
+				.requestMatchers("/").permitAll().requestMatchers(format("%s/**", restApiDocPath)).permitAll()
+				.requestMatchers(format("%s/**", swaggerPath)).permitAll()
 				// public endpoints
-				.antMatchers("/api/public/**").permitAll() // public assets & end-points
-				.antMatchers(HttpMethod.GET, "/api/allergen/**").permitAll() //
-				.antMatchers(HttpMethod.GET, "/api/orgunit/**").permitAll() //
-				.antMatchers(HttpMethod.GET, "/api/dishtype/**").permitAll() //
-				.antMatchers(HttpMethod.GET, "/api/dish/**").permitAll() //
-				.antMatchers(HttpMethod.GET, "/api/reporting/dish/**").permitAll() //
-				.antMatchers(HttpMethod.GET, "/api/meal/**").permitAll()
+				.requestMatchers("/api/public/**").permitAll() // public assets & end-points
+				.requestMatchers(HttpMethod.GET, "/api/allergen/**").permitAll() //
+				.requestMatchers(HttpMethod.GET, "/api/orgunit/**").permitAll() //
+				.requestMatchers(HttpMethod.GET, "/api/dishtype/**").permitAll() //
+				.requestMatchers(HttpMethod.GET, "/api/dish/**").permitAll() //
+				.requestMatchers(HttpMethod.GET, "/api/reporting/dish/**").permitAll() //
+				.requestMatchers(HttpMethod.GET, "/api/meal/**").permitAll()
 				// private endpoints
-				.antMatchers("/api/admin/user/**").hasRole(Role.USER_ADMIN) //
-				.antMatchers("/api/dishtype/**").hasRole(Role.DISH_ADMIN) //
-				.antMatchers("/api/dish/**").hasRole(Role.DISH_ADMIN) //
-				.antMatchers("/api/mealplan/**").hasRole(Role.MEAL_ADMIN) //
-				.antMatchers("/api/meal/**").hasRole(Role.MEAL_ADMIN) //
+				.requestMatchers("/api/admin/user/**").hasRole(Role.USER_ADMIN) //
+				.requestMatchers("/api/dishtype/**").hasRole(Role.DISH_ADMIN) //
+				.requestMatchers("/api/dish/**").hasRole(Role.DISH_ADMIN) //
+				.requestMatchers("/api/mealplan/**").hasRole(Role.MEAL_ADMIN) //
+				.requestMatchers("/api/meal/**").hasRole(Role.MEAL_ADMIN) //
 				.anyRequest().authenticated()
 				// Set up oauth2 resource server
 				.and().httpBasic(Customizer.withDefaults()).oauth2ResourceServer().jwt();
+
+		return http.build();
 	}
 
 	// Used by JwtAuthenticationProvider to generate JWT tokens
@@ -158,12 +172,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
-	}
-
-	// Expose authentication manager bean
-	@Override
-	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
 	}
 }
