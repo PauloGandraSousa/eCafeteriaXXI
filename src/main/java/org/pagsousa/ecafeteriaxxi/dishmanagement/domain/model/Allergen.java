@@ -2,20 +2,19 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
 import java.util.Arrays;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Version;
-import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.strings.util.StringPredicates;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Version;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 /**
  * An Allergen.
@@ -152,10 +151,9 @@ public class Allergen implements AggregateRoot<String> {
 
 	@Override
 	public boolean sameAs(final Object other) {
-		if (!(other instanceof Allergen)) {
+		if (!(other instanceof final Allergen allergean)) {
 			return false;
 		}
-		final var allergean = (Allergen) other;
 		return this.equals(allergean) && fullName.equals(allergean.getFullName());
 	}
 

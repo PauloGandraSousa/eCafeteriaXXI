@@ -6,19 +6,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedNativeQuery;
-import javax.persistence.SqlResultSetMapping;
-import javax.persistence.Version;
-
-import org.hibernate.annotations.Type;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishesPerCaloricCategory;
 
 import eapli.framework.domain.model.AggregateRoot;
@@ -27,6 +14,17 @@ import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.money.domain.model.Money;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.ColumnResult;
+import jakarta.persistence.ConstructorResult;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.SqlResultSetMapping;
+import jakarta.persistence.Version;
 
 /**
  * A Dish.
@@ -37,9 +35,10 @@ import eapli.framework.validations.Preconditions;
  *
  */
 @Entity
-@NamedNativeQuery(name = "nativeDishesPerCaloricCategory", query = "SELECT caloricCategory, COUNT(*) as n "
-		+ "FROM (SELECT *, CASE WHEN calories <= 150 THEN 'low' WHEN calories > 150 AND calories < 350 THEN 'medium' ELSE 'high' END AS caloricCategory FROM DISH) "
-		+ "GROUP BY caloricCategory", resultSetMapping = "DishesPerCaloricCategoryMapping")
+@NamedNativeQuery(name = "nativeDishesPerCaloricCategory", query = """
+		SELECT caloricCategory, COUNT(*) as n\s\
+		FROM (SELECT *, CASE WHEN calories <= 150 THEN 'low' WHEN calories > 150 AND calories < 350 THEN 'medium' ELSE 'high' END AS caloricCategory FROM DISH)\s\
+		GROUP BY caloricCategory""", resultSetMapping = "DishesPerCaloricCategoryMapping")
 @SqlResultSetMapping(name = "DishesPerCaloricCategoryMapping", classes = @ConstructorResult(targetClass = DishesPerCaloricCategory.class, columns = {
 		@ColumnResult(name = "caloricCategory"), @ColumnResult(name = "n") }))
 public class Dish implements AggregateRoot<UUID> {
@@ -51,12 +50,8 @@ public class Dish implements AggregateRoot<UUID> {
 	 * the "real" business identity would be the name of the dish. However, dish
 	 * names might not be compliant with URI sintax and as such cannot be used to
 	 * identify the resource in the REST API.
-	 * <p>
-	 * We use the Hibernate Type annotation to instruct how to map the UUID to the
-	 * database schema
 	 */
 	@Id
-	@Type(type = "uuid-char")
 	private UUID id;
 
 	@Version
@@ -127,11 +122,10 @@ public class Dish implements AggregateRoot<UUID> {
 
 	@Override
 	public boolean sameAs(final Object other) {
-		if (!(other instanceof Dish)) {
+		if (!(other instanceof final Dish that)) {
 			return false;
 		}
 
-		final var that = (Dish) other;
 		if (this == that) {
 			return true;
 		}

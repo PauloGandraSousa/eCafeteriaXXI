@@ -2,8 +2,7 @@ package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
 import java.util.Set;
 
-import javax.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

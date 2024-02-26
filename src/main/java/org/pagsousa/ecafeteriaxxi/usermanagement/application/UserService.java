@@ -2,8 +2,6 @@ package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
 import java.util.List;
 
-import javax.validation.ValidationException;
-
 import org.pagsousa.ecafeteriaxxi.exceptions.ConflictException;
 import org.pagsousa.ecafeteriaxxi.usermanagement.domain.model.User;
 import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserRepository;
@@ -14,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 
 /**

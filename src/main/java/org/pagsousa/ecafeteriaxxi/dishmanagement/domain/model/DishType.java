@@ -2,19 +2,18 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
 import java.util.Optional;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Version;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 /**
  * A dish type, e.g., vegetarian or fish or meat.
@@ -191,11 +190,10 @@ public class DishType implements AggregateRoot<DishTypeAcronym> {
 	 */
 	@Override
 	public boolean sameAs(final Object other) {
-		if (!(other instanceof DishType)) {
+		if (!(other instanceof final DishType that)) {
 			return false;
 		}
 
-		final var that = (DishType) other;
 		return new EqualsBuilder().append(active, that.active).append(shortDescription, that.shortDescription)
 				.append(longDescription, that.longDescription).append(acronym, that.acronym).isEquals();
 	}

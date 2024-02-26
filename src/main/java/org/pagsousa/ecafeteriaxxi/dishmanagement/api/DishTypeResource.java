@@ -2,8 +2,6 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
 import java.net.URISyntaxException;
 
-import javax.validation.Valid;
-
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.CreateOrReplaceDishTypeRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.DishTypeService;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.UpdateDishTypeRequest;
@@ -30,6 +28,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -59,7 +58,8 @@ public class DishTypeResource extends AbstractResource {
 	@GetMapping(value = "/{acronym}")
 	public ResponseEntity<DishTypeView> findByAcronym(
 			@PathVariable("acronym") @Parameter(description = "The acronym of the dish type to find") final String acronym) {
-		final var dishType = service.findByAcronym(acronym).orElseThrow(() -> new NotFoundException(DishType.class, acronym));
+		final var dishType = service.findByAcronym(acronym)
+				.orElseThrow(() -> new NotFoundException(DishType.class, acronym));
 		return ResponseEntity.ok().eTag(Long.toString(dishType.getVersion())).body(viewMapper.toView(dishType));
 	}
 
@@ -83,7 +83,8 @@ public class DishTypeResource extends AbstractResource {
 			// no if-match header was sent, so we are in INSERT mode
 			final var dishType = service.create(acronym, resource);
 			final var newUri = ServletUriComponentsBuilder.fromCurrentRequestUri().build().toUri();
-			return ResponseEntity.created(newUri).eTag(Long.toString(dishType.getVersion())).body(viewMapper.toView(dishType));
+			return ResponseEntity.created(newUri).eTag(Long.toString(dishType.getVersion()))
+					.body(viewMapper.toView(dishType));
 		}
 		// if-match header was sent, so we are in UPDATE mode
 		final var dt = service.replace(acronym, resource, getVersionFromIfMatchHeader(ifMatchValue));

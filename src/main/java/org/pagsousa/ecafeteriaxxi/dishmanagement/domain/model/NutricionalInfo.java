@@ -1,9 +1,8 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
-import javax.persistence.Embeddable;
-
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Embeddable;
 import lombok.Value;
 import lombok.experimental.Accessors;
 

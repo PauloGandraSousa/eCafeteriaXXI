@@ -1,12 +1,11 @@
 package org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.Value;
 import lombok.experimental.Accessors;
 

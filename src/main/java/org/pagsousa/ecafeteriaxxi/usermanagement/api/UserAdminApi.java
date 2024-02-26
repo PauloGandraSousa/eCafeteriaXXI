@@ -1,8 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.usermanagement.api;
 
-import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
-
 import org.pagsousa.ecafeteriaxxi.usermanagement.application.CreateUserRequest;
 import org.pagsousa.ecafeteriaxxi.usermanagement.application.EditUserRequest;
 import org.pagsousa.ecafeteriaxxi.usermanagement.application.SearchRequest;
@@ -19,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**

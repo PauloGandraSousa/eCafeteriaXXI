@@ -1,11 +1,10 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 import eapli.framework.domain.model.ValueObject;
 import eapli.framework.strings.StringMixin;
 import eapli.framework.strings.util.StringPredicates;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
 /**

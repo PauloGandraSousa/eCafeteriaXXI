@@ -5,8 +5,6 @@ import static java.util.stream.Collectors.joining;
 
 import java.time.Instant;
 
-import javax.validation.Valid;
-
 import org.pagsousa.ecafeteriaxxi.usermanagement.api.UserView;
 import org.pagsousa.ecafeteriaxxi.usermanagement.api.UserViewMapper;
 import org.pagsousa.ecafeteriaxxi.usermanagement.application.CreateUserRequest;
@@ -28,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**

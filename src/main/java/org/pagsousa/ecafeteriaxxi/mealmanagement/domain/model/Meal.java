@@ -2,21 +2,20 @@ package org.pagsousa.ecafeteriaxxi.mealmanagement.domain.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
-
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.Dish;
 import org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model.Cafeteria;
 
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 
 /**
  * A meal.
@@ -122,11 +121,10 @@ public class Meal implements AggregateRoot<Long> {
 
 	@Override
 	public boolean sameAs(final Object other) {
-		if (!(other instanceof Meal)) {
+		if (!(other instanceof final Meal that)) {
 			return false;
 		}
 
-		final var that = (Meal) other;
 		if (this == that) {
 			return true;
 		}

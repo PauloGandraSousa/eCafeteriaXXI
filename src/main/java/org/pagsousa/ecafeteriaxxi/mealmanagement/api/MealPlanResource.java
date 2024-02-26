@@ -1,7 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.mealmanagement.api;
 
-import javax.validation.Valid;
-
 import org.pagsousa.ecafeteriaxxi.mealmanagement.application.MealPlanRequest;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.application.MealPlanService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**

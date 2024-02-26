@@ -1,7 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.mealmanagement.api;
 
-import javax.validation.Valid;
-
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.model.DishType;
 import org.pagsousa.ecafeteriaxxi.exceptions.NotFoundException;
 import org.pagsousa.ecafeteriaxxi.mealmanagement.application.CreateMealRequest;
@@ -29,6 +27,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -66,8 +65,8 @@ public class MealResource extends AbstractResource {
 	@PostMapping
 	public ResponseEntity<MealView> create(@Valid @RequestBody final CreateMealRequest request) {
 		final var meal = service.create(request);
-		final var newUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(meal.identity().toString()).build()
-				.toUri();
+		final var newUri = ServletUriComponentsBuilder.fromCurrentRequestUri().pathSegment(meal.identity().toString())
+				.build().toUri();
 		return ResponseEntity.created(newUri).eTag(Long.toString(meal.getVersion())).body(viewMapper.toView(meal));
 	}
 

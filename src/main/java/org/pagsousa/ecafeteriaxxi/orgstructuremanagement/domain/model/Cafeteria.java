@@ -2,22 +2,21 @@ package org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model;
 
 import java.util.Optional;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Version;
 
 /**
  * A Cafeteria.
@@ -63,17 +62,16 @@ public class Cafeteria implements AggregateRoot<CafeteriaName> {
 
 	@Override
 	public boolean sameAs(final Object other) {
-		if (!(other instanceof Cafeteria)) {
+		if (!(other instanceof final Cafeteria that)) {
 			return false;
 		}
 
-		final var that = (Cafeteria) other;
 		if (this == that) {
 			return true;
 		}
 
-		return identity().equals(that.identity()) && name.equals(that.name)
-				&& description.equals(that.description) && this.organicUnit.equals(that.organicUnit);
+		return identity().equals(that.identity()) && name.equals(that.name) && description.equals(that.description)
+				&& this.organicUnit.equals(that.organicUnit);
 	}
 
 	@Override

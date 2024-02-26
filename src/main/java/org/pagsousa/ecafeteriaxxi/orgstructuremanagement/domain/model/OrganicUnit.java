@@ -2,19 +2,18 @@ package org.pagsousa.ecafeteriaxxi.orgstructuremanagement.domain.model;
 
 import java.util.Optional;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
-
 import eapli.framework.domain.model.AggregateRoot;
 import eapli.framework.domain.model.DomainEntities;
 import eapli.framework.general.domain.model.Description;
 import eapli.framework.general.domain.model.Designation;
 import eapli.framework.validations.Preconditions;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 /**
  * An organic unit.
@@ -89,11 +88,10 @@ public class OrganicUnit implements AggregateRoot<Designation> {
 
 	@Override
 	public boolean sameAs(final Object other) {
-		if (!(other instanceof OrganicUnit)) {
+		if (!(other instanceof final OrganicUnit that)) {
 			return false;
 		}
 
-		final var that = (OrganicUnit) other;
 		if (this == that) {
 			return true;
 		}

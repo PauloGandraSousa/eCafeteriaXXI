@@ -2,10 +2,10 @@ package org.pagsousa.ecafeteriaxxi.dishmanagement.infrastructure.repositories.im
 
 import java.math.BigInteger;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
-
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishesPerCaloricCategory;
+
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 /**
  *

@@ -1,7 +1,5 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.api;
 
-import javax.validation.Valid;
-
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.CreateOrReplaceDishRequest;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.DishService;
 import org.pagsousa.ecafeteriaxxi.dishmanagement.application.UpdateDishRequest;
@@ -28,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 /**

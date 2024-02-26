@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.18</version>
+		<version>3.2.3</version>
 	</parent>
 	<groupId>org.pagsousa</groupId>
 	<artifactId>ecafeteriaxxi</artifactId>
@@ -14,9 +16,8 @@
 	<properties>
 		<java.version>17</java.version>
 
-		<spring-security.version>5.8.9</spring-security.version>
-		
-		<!-- automatically run annotation processors within the incremental compilation -->
+		<!-- automatically run annotation processors within the incremental
+		compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 
 		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
@@ -26,9 +27,9 @@
 		<downloadJavadocs>true</downloadJavadocs>
 
 		<!-- version property for release from Jitpack.io -->
-		<eapli.framework.core.version>v23.0.0_RELEASE</eapli.framework.core.version>
+		<eapli.framework.core.version>v24.0.1_RELEASE</eapli.framework.core.version>
 		<!-- version property for local nexus repository for development -->
-		<eapli.framework.core.version-snapshot>23.0.0</eapli.framework.core.version-snapshot>
+		<eapli.framework.core.version-snapshot>25.0.0</eapli.framework.core.version-snapshot>
 	</properties>
 	<dependencies>
 		<!-- EAPLI framework -->
@@ -48,7 +49,7 @@
 			<version>${eapli.framework.core.version-snapshot}</version>
 		</dependency>	
 		-->
-		
+
 		<!-- Spring framework -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -107,11 +108,27 @@
 			<version>1.5.5.Final</version>
 		</dependency>
 	</dependencies>
+
+	<!-- Nexus repository for EAPLI artifacts -->
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -125,13 +142,15 @@
 							<artifactId>lombok</artifactId>
 							<version>1.18.30</version>
 						</path>
-						<!-- Mapper library to automate model transformations DTO: <-> Model -->
+						<!-- Mapper library to automate model transformations
+						DTO: <-> Model -->
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>1.5.5.Final</version>
 						</path>
-						<!-- additional annotation processor required as of Lombok 1.18.16 -->
+						<!-- additional annotation processor required as of
+						Lombok 1.18.16 -->
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok-mapstruct-binding</artifactId>
@@ -161,7 +180,8 @@
 							<verbose>false</verbose>
 						</configuration>
 					</execution>
-					<!-- This is for delomboking also your tests sources. <execution> <id>test-delombok</id> 
+					<!-- This is for delomboking also your tests sources.
+					<execution> <id>test-delombok</id> 
 						<phase>generate-test-sources</phase> <goals> <goal>testDelombok</goal> </goals> 
 						<configuration> <verbose>false</verbose> </configuration> </execution> -->
 				</executions>

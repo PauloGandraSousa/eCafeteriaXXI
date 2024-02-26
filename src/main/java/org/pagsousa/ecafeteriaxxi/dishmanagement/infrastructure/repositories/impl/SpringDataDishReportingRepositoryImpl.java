@@ -1,11 +1,10 @@
 package org.pagsousa.ecafeteriaxxi.dishmanagement.infrastructure.repositories.impl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.pagsousa.ecafeteriaxxi.dishmanagement.domain.repositories.DishesPerCaloricCategory;
 import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * since SpringData was not able to run native queries and apply the custom
@@ -24,7 +23,7 @@ public class SpringDataDishReportingRepositoryImpl implements SpringDataDishRepo
 	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<DishesPerCaloricCategory> reportDishesPerCaloricCategory() {
-		final Query query = entityManager.createNativeQuery(Queries.DISHES_PER_CALORIC_CATEGORY,
+		final var query = entityManager.createNativeQuery(Queries.DISHES_PER_CALORIC_CATEGORY,
 				"DishesPerCaloricCategoryMapping");
 		return query.getResultList();
 	}

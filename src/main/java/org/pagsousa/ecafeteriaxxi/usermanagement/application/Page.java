@@ -1,8 +1,7 @@
 package org.pagsousa.ecafeteriaxxi.usermanagement.application;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
