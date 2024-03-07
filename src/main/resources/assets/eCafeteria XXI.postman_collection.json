@@ -16,7 +16,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/api-docs/",
+							"raw": "{{host}}/api-docs",
 							"host": [
 								"{{host}}"
 							],

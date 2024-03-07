@@ -10,6 +10,7 @@ import org.pagsousa.ecafeteriaxxi.usermanagement.domain.repositories.UserReposit
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -54,6 +55,7 @@ import lombok.RequiredArgsConstructor;
  * @author Paulo Gandra de Sousa
  *
  */
+@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @EnableConfigurationProperties
@@ -93,10 +95,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// Enable CORS and disable CSRF
-		http = http.cors().and().csrf().disable();
+		http = http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable());
 
 		// Set session management to stateless
-		http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
+		http = http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		// Set unauthorized requests exception handler
 		http = http.exceptionHandling(
