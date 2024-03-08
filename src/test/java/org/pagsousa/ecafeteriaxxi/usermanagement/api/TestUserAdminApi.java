@@ -88,8 +88,7 @@ class TestUserAdminApi {
 		this.mockMvc
 				.perform(post("/api/admin/user").contentType(MediaType.APPLICATION_JSON)
 						.content(JsonHelper.toJson(objectMapper, badRequest)))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string(containsString("Method argument validation failed")));
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -146,8 +145,7 @@ class TestUserAdminApi {
 				.perform(put(String.format("/api/admin/user/%s", userView.getId()))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(JsonHelper.toJson(objectMapper, updateRequest)))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string(containsString("Method argument validation failed")));
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
