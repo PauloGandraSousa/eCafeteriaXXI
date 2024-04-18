@@ -14,8 +14,6 @@
 	<name>eCafeteriaXXI</name>
 	<description>REST API for eCafeteria XXI</description>
 	<properties>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
 		<maven.compiler.release>17</maven.compiler.release>
 
 		<!-- automatically run annotation processors within the incremental
@@ -29,7 +27,7 @@
 		<downloadJavadocs>true</downloadJavadocs>
 
 		<!-- version property for release from Jitpack.io -->
-		<eapli.framework.core.version>v24.0.1_RELEASE</eapli.framework.core.version>
+		<eapli.framework.core.version>v24.1.0_RELEASE</eapli.framework.core.version>
 		<!-- version property for local nexus repository for development -->
 		<eapli.framework.core.version-snapshot>25.0.0</eapli.framework.core.version-snapshot>
 	</properties>
@@ -164,6 +162,13 @@
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>
 				<version>1.18.20.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.projectlombok</groupId>
+						<artifactId>lombok</artifactId>
+						<version>1.18.30</version>
+					</dependency>
+				</dependencies>
 				<executions>
 					<execution>
 						<id>delombok</id>
